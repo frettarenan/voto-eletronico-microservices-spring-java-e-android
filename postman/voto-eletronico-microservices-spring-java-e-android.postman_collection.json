@@ -105,33 +105,6 @@
 							"response": []
 						},
 						{
-							"name": "atualizar",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\" : 1,\n    \"descricao\": \"Aprova aumento do orçamento para segurança pública?\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "localhost:8080/pauta",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"pauta"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "delete",
 							"request": {
 								"method": "DELETE",
@@ -145,6 +118,70 @@
 									"path": [
 										"pauta",
 										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Voto",
+					"item": [
+						{
+							"name": "salvar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"sessaoVotacao\": {\n        \"id\" : 1\n    },\n    \"usuario\" : {\n        \"id\" : 1\n    },\n    \"voto\" : true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/voto",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"voto"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "SessaoVotacao",
+					"item": [
+						{
+							"name": "salvar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"pauta\": {\n        \"id\": 1\n    },\n    \"minutosParaVotacao\" : 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/sessao-votacao",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sessao-votacao"
 									]
 								}
 							},
