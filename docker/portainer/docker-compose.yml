@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  rf-portainer:
+    image: portainer/portainer
+    container_name: rf-portainer
+    ports:
+      - "9000:9000"
+    command: --admin-password "$$2y$$05$$arC5e4UbRPxfR68jaFnAAe1aL7C1U03pqfyQh49/9lB9lqFxLfBqS"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

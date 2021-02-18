@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "6c8645cc-ed7e-419a-a7a3-ec31375a6b59",
+		"name": "voto-eletronico-microservices-spring-java-e-android",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Módulo Usuário",
+			"item": [
+				{
+					"name": "Usuário",
+					"item": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Módulo Voto Eletrônico",
+			"item": [
+				{
+					"name": "Pauta",
+					"item": [
+						{
+							"name": "findAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/pauta",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"pauta"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/pauta/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"pauta",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "salvar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"descricao\": \"Aprova aumento do orçamento para educação?\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/pauta",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"pauta"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "atualizar",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\" : 1,\n    \"descricao\": \"Aprova aumento do orçamento para segurança pública?\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/pauta",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"pauta"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}

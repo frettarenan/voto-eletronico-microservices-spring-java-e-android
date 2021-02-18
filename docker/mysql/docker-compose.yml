@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  rf-mysql-voto-eletronico:
+    image: mysql:5.7
+    container_name: rf-mysql-voto-eletronico
+    environment:
+      MYSQL_DATABASE: rf-voto-eletronico
+      MYSQL_USER: renanfretta
+      MYSQL_PASSWORD: 'Ren@nFretta1986'
+      MYSQL_ROOT_PASSWORD: 'Ren@nFretta1986'
+    ports:
+    - 3306:3306
