@@ -8,5 +8,6 @@ services:
       MYSQL_USER: renanfretta
       MYSQL_PASSWORD: 'Ren@nFretta1986'
       MYSQL_ROOT_PASSWORD: 'Ren@nFretta1986'
+      TZ: 'America/Sao_Paulo'
     ports:
     - 3306:3306

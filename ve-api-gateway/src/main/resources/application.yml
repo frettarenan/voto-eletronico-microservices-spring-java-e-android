@@ -15,4 +15,7 @@ spring:
       - id: veVotoEletronico
         uri: lb://VE-VOTO-ELETRONICO
         predicates:
-        - Path=/pauta/**
+        - Path=/**
+      discovery:
+        locator:
+          enabled: true

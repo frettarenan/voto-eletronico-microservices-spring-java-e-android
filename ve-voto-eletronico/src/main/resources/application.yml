@@ -20,4 +20,6 @@ spring:
     url: jdbc:mysql://localhost:3306/rf-voto-eletronico?createDatabaseIfNotExist=true&useSSL=false
     username: renanfretta
     password: Ren@nFretta1986
-    
+  jackson:
+    time-zone: America/Sao_Paulo
+    locale: pt_BR
