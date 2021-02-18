@@ -130,6 +130,25 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/pauta/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"pauta",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
