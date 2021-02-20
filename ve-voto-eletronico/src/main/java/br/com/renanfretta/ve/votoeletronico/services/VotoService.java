@@ -2,12 +2,17 @@ package br.com.renanfretta.ve.votoeletronico.services;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.renanfretta.ve.commons.dtos.usuario.UsuarioDTO;
 import br.com.renanfretta.ve.commons.dtos.votoeletronico.sessaovotacao.SessaoVotacaoOutputDTO;
@@ -28,7 +33,12 @@ import reactor.core.publisher.Mono;
 @Validated
 public class VotoService {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(VotoService.class);
+
 	private static final String STATUS_ABLE_TO_VOTE = "ABLE_TO_VOTE";
+
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Autowired
 	private OrikaMapper orikaMapper;
@@ -50,14 +60,14 @@ public class VotoService {
 
 	private VotoOutputDTO findById(Long id) {
 		Voto voto = repository.findById(id).orElseThrow();
+		LOGGER.trace("VotoRepository/findById(" + id + ") teve êxito");
 		VotoOutputDTO dto = orikaMapper.map(voto, VotoOutputDTO.class);
 		return dto;
 	}
 
-	public VotoOutputDTO save(VotoInputDTO votoInputDTO) throws ErroTratadoRestException {
+	public VotoOutputDTO save(VotoInputDTO votoInputDTO) throws ErroTratadoRestException, JsonProcessingException {
 		Date dataVotacao = new Date();
-		SessaoVotacaoOutputDTO sessaoVotacaoOutputDTO = sessaoVotacaoService
-				.findById(votoInputDTO.getSessaoVotacao().getId());
+		SessaoVotacaoOutputDTO sessaoVotacaoOutputDTO = sessaoVotacaoService.findById(votoInputDTO.getSessaoVotacao().getId());
 		UsuarioDTO usuarioDTO = usuarioService.findById(votoInputDTO.getUsuario().getId());
 
 		validaSeCpfTemPermissaoDeVoto(usuarioDTO.getCpf());
@@ -69,6 +79,8 @@ public class VotoService {
 		voto.setDataHoraVotacao(dataVotacao);
 
 		voto = repository.save(voto);
+		LOGGER.trace("VotoRepository/save(" + objectMapper.writeValueAsString(voto) + ") teve êxito");
+
 		VotoOutputDTO votoOutputDTO = findById(voto.getId());
 		return votoOutputDTO;
 	}
@@ -82,22 +94,22 @@ public class VotoService {
 		UserInfoApiUsersFindByCpfOutput retorno = webClient.get() //
 				.uri("/users/" + cpf) //
 				.accept(MediaType.APPLICATION_JSON).retrieve() //
-				.onStatus(HttpStatus::is4xxClientError,
-						error -> Mono.error(new ErroTratadoRestException(messagesProperty
-								.getMessage(MessagesPropertyEnum.ERRO__USER_INFO_SERVICE_CPF_NAO_ENCONTRADO))))
+				.onStatus(HttpStatus::is4xxClientError, error -> Mono.error(new ErroTratadoRestException(messagesProperty.getMessage(MessagesPropertyEnum.ERRO__USER_INFO_SERVICE_CPF_NAO_ENCONTRADO))))
 				.bodyToMono(UserInfoApiUsersFindByCpfOutput.class) //
 				.block();
 
-		if (!retorno.getStatus().equalsIgnoreCase(STATUS_ABLE_TO_VOTE))
-			throw new ErroTratadoRestException(
-					messagesProperty.getMessage(MessagesPropertyEnum.RN__USUARIO_NAO_AUTORIZADO_VOTAR));
+		if (!retorno.getStatus().equalsIgnoreCase(STATUS_ABLE_TO_VOTE)) {
+			LOGGER.warn("VotoRepository/validaSeCpfTemPermissaoDeVoto(" + cpf + ") não pode votar > acesso negado");
+			throw new ErroTratadoRestException(messagesProperty.getMessage(MessagesPropertyEnum.RN__USUARIO_NAO_AUTORIZADO_VOTAR));
+		}
 	}
 
-	private void validaHorarioVotacao(Date dataVotacao, SessaoVotacaoOutputDTO sessaoVotacaoOutputDTO)
-			throws ErroTratadoRestException {
-		if (dataVotacao.after(sessaoVotacaoOutputDTO.getDataHoraFim()))
-			throw new ErroTratadoRestException(
-					messagesProperty.getMessage(MessagesPropertyEnum.RN__SESSAO_VOTACAO_ENCERRADA));
+	private void validaHorarioVotacao(Date dataVotacao, SessaoVotacaoOutputDTO sessaoVotacaoOutputDTO) throws ErroTratadoRestException, JsonProcessingException {
+		if (dataVotacao.after(sessaoVotacaoOutputDTO.getDataHoraFim())) {
+			LOGGER.warn("VotoRepository/validaHorarioVotacao(" + objectMapper.writeValueAsString(sessaoVotacaoOutputDTO) + ", " + dataVotacao
+					+ ") não pode votar > ultrapassou o horário máximo de votação");
+			throw new ErroTratadoRestException(messagesProperty.getMessage(MessagesPropertyEnum.RN__SESSAO_VOTACAO_ENCERRADA));
+		}
 	}
 
 }
