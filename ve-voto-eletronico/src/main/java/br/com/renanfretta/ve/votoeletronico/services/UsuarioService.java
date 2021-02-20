@@ -21,10 +21,18 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
 	
+	public UsuarioDTO findById(Long id) {
+		Usuario usuario = repository.findById(id).orElseThrow();
+		UsuarioDTO dto = orikaMapper.map(usuario, UsuarioDTO.class);
+		return dto;
+	}
+	
 	public List<UsuarioDTO> findByCpfAndSenha(String cpf, String senha) {
 		List<Usuario> list = repository.findByCpfAndSenha(cpf, senha);
 		List<UsuarioDTO> listDTO = orikaMapper.mapAsList(list, UsuarioDTO.class);
 		return listDTO;
 	}
+	
+	
 	
 }

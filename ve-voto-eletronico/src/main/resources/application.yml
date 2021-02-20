@@ -23,3 +23,7 @@ spring:
   jackson:
     time-zone: America/Sao_Paulo
     locale: pt_BR
+    
+votoeletronico:
+  userinfoapiurl: https://user-info.herokuapp.com
+  quantidademinutosessaovotacaopadrao: 1

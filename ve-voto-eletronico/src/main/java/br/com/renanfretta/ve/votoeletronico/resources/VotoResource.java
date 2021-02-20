@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.renanfretta.ve.commons.dtos.votoeletronico.voto.VotoInputDTO;
 import br.com.renanfretta.ve.commons.dtos.votoeletronico.voto.VotoOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.exceptions.ErroTratadoRestException;
 import br.com.renanfretta.ve.votoeletronico.services.VotoService;
 
 @RestController
@@ -22,7 +23,7 @@ public class VotoResource {
 	private VotoService service;
 	
 	@PostMapping
-	public ResponseEntity<VotoOutputDTO> salvar(@Valid @RequestBody VotoInputDTO votoInputDTO) {
+	public ResponseEntity<VotoOutputDTO> salvar(@Valid @RequestBody VotoInputDTO votoInputDTO) throws ErroTratadoRestException {
 		VotoOutputDTO votoOutputDTO = service.save(votoInputDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(votoOutputDTO);
 	}

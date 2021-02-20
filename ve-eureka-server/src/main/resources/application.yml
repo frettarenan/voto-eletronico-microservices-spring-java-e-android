@@ -2,8 +2,8 @@ server:
   port: 8761
  
 eureka:
-  server:
-    renewal-percent-threshold: 0.85
+#  server:
+#    renewal-percent-threshold: 0.85
   instance:
     hostname: localhost
   client:
