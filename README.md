@@ -8,3 +8,20 @@ Objetivos:
 # Documentação técnica
 
 *Disponível* aqui: https://docs.google.com/document/d/1Kv4q6g8wr-M_GVvyE1oFSk3Y7SK-HPkSRDKIkoPUXmY
+
+## Configuração do Postman
+
+    Importe o arquivo: "./postman/microservices-spring-java.postman_collection.json"
+
+## Procedimento para ligar o servidor de banco de dados
+
+    No terminal do sistema operacional, entre no diretório "docker" e digite o comando: "./up-dev-mysql.sh".
+
+## Procedimento para desligar o servidor de banco de dados
+
+    No terminal do sistema operacional, entre no diretório "docker" e digite o comando: "./down-environment.sh".
+
+## Acesso Swagger > via Gateway
+
+  * http://localhost:8080/swagger-ui/index.html
+  * http://localhost:8080/v2/api-docs
