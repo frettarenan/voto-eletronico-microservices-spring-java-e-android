@@ -79,7 +79,7 @@ public class PautaResource {
 			return ResponseEntity.ok(pautaDTO);
 		} catch (NoSuchElementException e) {
 			LOGGER.warn("PautaResource/deleteById(" + id + ") NoSuchElementException");
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.badRequest().build();
 		}
 	}
 
