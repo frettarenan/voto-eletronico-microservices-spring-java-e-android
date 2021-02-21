@@ -18,7 +18,7 @@ public enum MessagesPropertyEnum {
 	ERRO__REGISTRO_NAO_ENCONTRADO_ENTIDADE_VOTO("erro.registro-nao-encontrado-entidade-voto"), //
 
 	// UNIQUE CONSTRAINTS
-	RN__UNIQUE_CNPJ_CONSTRUTORA("rn.unique_voto_usuario"), //
+	RN__UNIQUE_VOTO_USUARIO("rn.unique_voto_usuario"), //
 
 	// Regras de negócio
 	RN__SESSAO_VOTACAO_ENCERRADA("rn.sessao_votacao_encerrada"), //
