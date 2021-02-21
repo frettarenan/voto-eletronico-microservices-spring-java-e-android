@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaInputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.services.PautaService;
 import io.swagger.annotations.ApiOperation;
@@ -64,10 +65,10 @@ public class PautaResource {
 
 	@ApiOperation(value = "Cadastra uma nova pauta")
 	@PostMapping
-	public ResponseEntity<PautaOutputDTO> salvar(@Valid @RequestBody PautaOutputDTO pautaDTO) throws JsonProcessingException {
-		LOGGER.trace("PautaResource/salvar( " + objectMapper.writeValueAsString(pautaDTO) + ") foi chamado");
-		pautaDTO = service.save(pautaDTO);
-		return ResponseEntity.status(HttpStatus.CREATED).body(pautaDTO);
+	public ResponseEntity<PautaOutputDTO> salvar(@Valid @RequestBody PautaInputDTO pautaInputDTO) throws JsonProcessingException {
+		LOGGER.trace("PautaResource/salvar( " + objectMapper.writeValueAsString(pautaInputDTO) + ") foi chamado");
+		PautaOutputDTO pautaOutputDTO = service.save(pautaInputDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(pautaOutputDTO);
 	}
 
 	@ApiOperation(value = "Deleta pauta pelo ID ")

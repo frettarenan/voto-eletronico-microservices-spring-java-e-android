@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.renanfretta.ve.votoeletronico.configs.OrikaMapper;
 import br.com.renanfretta.ve.votoeletronico.configs.properties.MessagesProperty;
+import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaInputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.entities.Pauta;
 import br.com.renanfretta.ve.votoeletronico.enums.MessagesPropertyEnum;
@@ -51,11 +52,11 @@ public class PautaService {
 		return dto;
 	}
 
-	public PautaOutputDTO save(PautaOutputDTO pautaOutputDTO) throws JsonProcessingException {
-		Pauta pauta = orikaMapper.map(pautaOutputDTO, Pauta.class);
+	public PautaOutputDTO save(PautaInputDTO pautaInputDTO) throws JsonProcessingException {
+		Pauta pauta = orikaMapper.map(pautaInputDTO, Pauta.class);
 		pauta = repository.save(pauta);
-		LOGGER.trace("PautaRepository/save(" + objectMapper.writeValueAsString(pautaOutputDTO) + ") teve êxito");
-		pautaOutputDTO = findById(pauta.getId());
+		LOGGER.trace("PautaRepository/save(" + objectMapper.writeValueAsString(pauta) + ") teve êxito");
+		PautaOutputDTO pautaOutputDTO = findById(pauta.getId());
 		return pautaOutputDTO;
 	}
 

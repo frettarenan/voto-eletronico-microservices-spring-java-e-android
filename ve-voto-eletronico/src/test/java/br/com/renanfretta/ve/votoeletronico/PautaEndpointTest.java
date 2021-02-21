@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaInputDTO;
 import br.com.renanfretta.ve.votoeletronico.entities.Pauta;
 import br.com.renanfretta.ve.votoeletronico.repositories.pauta.PautaRepository;
 
@@ -131,8 +132,12 @@ public class PautaEndpointTest {
 		@Test
 		@DisplayName("Salvo com sucesso")
 		public void salvarSucesso() throws Exception {
-
+			
 			Pauta pauta = Pauta.builder() //
+					.descricao("Aprova o novo orçamento para a saúde?") //
+					.build();
+
+			PautaInputDTO pautaInputDTO = PautaInputDTO.builder() //
 					.descricao("Aprova o novo orçamento para a saúde?") //
 					.build();
 
@@ -141,7 +146,7 @@ public class PautaEndpointTest {
 
 			mockMvc.perform(post("/pauta") //
 					.contentType(MediaType.APPLICATION_JSON) //
-					.content(objectMapper.writeValueAsString(pauta))) //
+					.content(objectMapper.writeValueAsString(pautaInputDTO))) //
 					.andExpect(status().isCreated()) //
 					.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
 					.andExpect(jsonPath("$.id").value(1)) //

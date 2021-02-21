@@ -37,6 +37,7 @@ public class SessaoVotacaoResource {
 	@PostMapping
 	public ResponseEntity<SessaoVotacaoOutputDTO> salvarEIniciar(@Valid @RequestBody SessaoVotacaoInputDTO sessaoVotacaoInputDTO) throws JsonProcessingException, ErroTratadoRestException {
 		LOGGER.trace("SessaoVotacaoResource/salvarEIniciar executado com o seguinte parâmetro entrada: sessaoVotacaoInputDTO: " + objectMapper.writeValueAsString(sessaoVotacaoInputDTO));
+		// FIXME: Implementar: validação criar uma mesma sessão para a mesma pauta no mesmo horário de vigência
 		SessaoVotacaoOutputDTO sessaoVotacaoOutputDTO = service.save(sessaoVotacaoInputDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(sessaoVotacaoOutputDTO);
 	}
