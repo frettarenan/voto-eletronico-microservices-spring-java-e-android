@@ -27,13 +27,10 @@ public class PautaOutputDTO implements Serializable {
 
 	private String descricao;
 
-	private boolean encerrada;
-
 	@QueryProjection
-	public PautaOutputDTO(Long id, String descricao, boolean encerrada) {
+	public PautaOutputDTO(Long id, String descricao) {
 		this.id = id;
 		this.descricao = descricao;
-		this.encerrada = encerrada;
 	}
 
 }

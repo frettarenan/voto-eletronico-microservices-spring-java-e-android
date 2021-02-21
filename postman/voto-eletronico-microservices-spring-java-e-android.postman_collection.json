@@ -154,6 +154,27 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "contabilizados",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/voto/contabilizados/pauta/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"voto",
+										"contabilizados",
+										"pauta",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -208,6 +229,32 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "Integração com user-info",
+			"item": [
+				{
+					"name": "/users/{cpf}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://user-info.herokuapp.com/users/23248538090",
+							"protocol": "https",
+							"host": [
+								"user-info",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"23248538090"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

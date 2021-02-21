@@ -31,12 +31,12 @@ public class VotoRepositoryImpl implements VotoRepositoryCustom {
 		query.select(QRelatorioVotosContabilizadosOutputDTO.create( //
 				_voto.voto, //
 				_voto.count(), //
-				QPautaOutputDTO.create(_pauta.id, _pauta.descricao, _pauta.encerrada)));
+				QPautaOutputDTO.create(_pauta.id, _pauta.descricao)));
 
 		query.from(_voto);
 		query.join(_voto.pauta, _pauta).fetch();
 		query.where(_voto.pauta.id.eq(idPauta));
-		query.groupBy(_voto.voto, _pauta.id, _pauta.descricao, _pauta.encerrada);
+		query.groupBy(_voto.voto, _pauta.id, _pauta.descricao);
 
 		return query.fetch();
 	}
