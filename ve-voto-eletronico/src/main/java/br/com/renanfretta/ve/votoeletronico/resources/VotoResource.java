@@ -25,6 +25,11 @@ import br.com.renanfretta.ve.votoeletronico.dtos.voto.VotoOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.exceptions.ErroTratadoRestException;
 import br.com.renanfretta.ve.votoeletronico.services.VotoService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping(value = "/voto")
@@ -38,7 +43,13 @@ public class VotoResource {
 	@Autowired
 	private VotoService service;
 
-	@ApiOperation(value = "Salva o voto")
+	@Operation(summary = "salvar", description = "Registra o voto")
+	@ApiResponses(value = { //
+			@ApiResponse(responseCode = "201", description = "Recurso criado", content = @Content(schema = @Schema(implementation = VotoOutputDTO.class))), //
+			@ApiResponse(responseCode = "401", description = "Não autorizado"), //
+			@ApiResponse(responseCode = "403", description = "Não possui permissão para acessar o recurso"), //
+			@ApiResponse(responseCode = "404", description = "Não encontrado") //
+	})
 	@PostMapping
 	public ResponseEntity<VotoOutputDTO> votar(@Valid @RequestBody VotoInputDTO votoInputDTO) throws ErroTratadoRestException, JsonProcessingException {
 		LOGGER.trace("VotoResource/votar executado com o seguinte parâmetro entrada: votoInputDTO: " + objectMapper.writeValueAsString(votoInputDTO));
@@ -46,9 +57,15 @@ public class VotoResource {
 		return ResponseEntity.status(HttpStatus.CREATED).body(votoOutputDTO);
 	}
 
-	@ApiOperation(value = "Consulta total de votos pelo ID da pauta informada")
+	@Operation(summary = "listaVotosContabilizados", description = "Consulta total de votos pelo ID da pauta informada")
+	@ApiResponses(value = { //
+			@ApiResponse(responseCode = "200", description = "Sucesso", content = @Content(schema = @Schema(implementation = RelatorioVotosContabilizadosOutputDTO.class))), //
+			@ApiResponse(responseCode = "401", description = "Não autorizado"), //
+			@ApiResponse(responseCode = "403", description = "Não possui permissão para acessar o recurso"), //
+			@ApiResponse(responseCode = "404", description = "Não encontrado") //
+	})
 	@GetMapping(value = "/contabilizados/pauta/{idPauta}")
-	public ResponseEntity<List<RelatorioVotosContabilizadosOutputDTO>> contabilizaVotos(@PathVariable Long idPauta) {
+	public ResponseEntity<List<RelatorioVotosContabilizadosOutputDTO>> listaVotosContabilizados(@PathVariable Long idPauta) {
 		LOGGER.trace("VotoResource/contabilizaVotos(" + idPauta + ") foi chamado");
 		List<RelatorioVotosContabilizadosOutputDTO> list = service.contabilizaVotos(idPauta);
 		// FIXME: Implementar: Pauta sem sessao de votacao
