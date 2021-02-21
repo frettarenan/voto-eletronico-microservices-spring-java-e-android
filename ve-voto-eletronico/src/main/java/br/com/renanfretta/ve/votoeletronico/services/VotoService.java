@@ -38,7 +38,7 @@ public class VotoService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(VotoService.class);
 
-	private static final String STATUS_ABLE_TO_VOTE = "ABLE_TO_VOTE";
+	public static final String STATUS_ABLE_TO_VOTE = "ABLE_TO_VOTE";
 
 	@Autowired
 	private ObjectMapper objectMapper;

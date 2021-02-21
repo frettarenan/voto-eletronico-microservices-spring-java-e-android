@@ -51,6 +51,8 @@ public class VotoResource {
 	public ResponseEntity<List<RelatorioVotosContabilizadosOutputDTO>> contabilizaVotos(@PathVariable Long idPauta) {
 		LOGGER.trace("VotoResource/contabilizaVotos(" + idPauta + ") foi chamado");
 		List<RelatorioVotosContabilizadosOutputDTO> list = service.contabilizaVotos(idPauta);
+		// Pauta sem sessao de votacao
+		// sem resultados
 		return ResponseEntity.ok(list);
 	}
 
