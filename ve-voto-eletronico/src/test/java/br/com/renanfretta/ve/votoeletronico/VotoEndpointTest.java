@@ -1,5 +1,6 @@
 package br.com.renanfretta.ve.votoeletronico;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -8,7 +9,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang.time.DateUtils;
@@ -157,6 +160,35 @@ public class VotoEndpointTest {
 					.andExpect(jsonPath("$.usuario.id").value(1)) //
 					.andExpect(jsonPath("$.dataHoraVotacao").value(dateFormat.format(voto01.getDataHoraVotacao()))) //
 					.andExpect(jsonPath("$.voto").value(true)); //
+		}
+
+		@Test
+		@DisplayName("CPF não encontrado")
+		public void salvarCpfNaoEncontrado() throws Exception {
+
+			Date dataHoraVotacao = new Date();
+
+			Voto voto = Voto.builder() //
+					.pauta(Pauta.builder().id(1L).build()) //
+					.sessaoVotacao(SessaoVotacao.builder().id(1L).build()) //
+					.usuario(Usuario.builder().id(1L).cpf("17358218027").build()) //
+					.dataHoraVotacao(dataHoraVotacao) //
+					.voto(true) //
+					.build();
+			
+			BDDMockito.when(votoRepository.save(voto)).thenReturn(voto01);
+			BDDMockito.when(votoRepository.findById(1L)).thenReturn(Optional.of(voto01));
+			BDDMockito.when(sessaoVotacaoRepository.findById(1L)).thenReturn(Optional.of(sessaoVotacao01));
+			BDDMockito.when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario01));
+
+			yamlConfig.setUserinfoapiurl(String.format("http://localhost:%s", mockWebServer.getPort()));
+			mockWebServer.enqueue(new MockResponse() //
+					.setStatus("HTTP/1.1 404"));
+
+			mockMvc.perform(post("/voto") //
+					.contentType(MediaType.APPLICATION_JSON) //
+					.content(objectMapper.writeValueAsString(voto))) //
+					.andExpect(status().isUnprocessableEntity()); //
 		}
 
 		// CPF nao encontrado na base de dados 17358218027
