@@ -24,7 +24,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaInputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.services.PautaService;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping(value = "/pauta")
@@ -38,7 +43,14 @@ public class PautaResource {
 	@Autowired
 	private PautaService service;
 
-	@ApiOperation(value = "Lista todas as pautas cadastradas")
+	@Operation(summary = "findAll", description = "Lista todas as pautas cadastradas")
+	@ApiResponses(value = { //
+			@ApiResponse(responseCode = "200", description = "Sucesso", content = @Content(array = @ArraySchema(schema = @Schema(implementation = PautaOutputDTO.class)))), //
+			@ApiResponse(responseCode = "204", description = "Sem resultados"), //
+			@ApiResponse(responseCode = "401", description = "Não autorizado"), //
+			@ApiResponse(responseCode = "403", description = "Não possui permissão para acessar o recurso"), //
+			@ApiResponse(responseCode = "404", description = "Não encontrado") //
+	})
 	@GetMapping
 	public ResponseEntity<List<PautaOutputDTO>> findAll() {
 		LOGGER.trace("PautaResource/findAll foi chamado");
@@ -50,7 +62,13 @@ public class PautaResource {
 		return ResponseEntity.ok(list);
 	}
 
-	@ApiOperation(value = "Consulta pauta pelo ID ")
+	@Operation(summary = "findById", description = "Consulta pauta pelo ID")
+	@ApiResponses(value = { //
+			@ApiResponse(responseCode = "200", description = "Sucesso", content = @Content(schema = @Schema(implementation = PautaOutputDTO.class))), //
+			@ApiResponse(responseCode = "401", description = "Não autorizado"), //
+			@ApiResponse(responseCode = "403", description = "Não possui permissão para acessar o recurso"), //
+			@ApiResponse(responseCode = "404", description = "Não encontrado") //
+	})
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<PautaOutputDTO> findById(@PathVariable Long id) {
 		LOGGER.trace("PautaResource/findById(" + id + ") foi chamado");
@@ -63,7 +81,13 @@ public class PautaResource {
 		}
 	}
 
-	@ApiOperation(value = "Cadastra uma nova pauta")
+	@Operation(summary = "salvar", description = "Cadastra uma nova pauta")
+	@ApiResponses(value = { //
+			@ApiResponse(responseCode = "201", description = "Sucesso", content = @Content(schema = @Schema(implementation = PautaOutputDTO.class))), //
+			@ApiResponse(responseCode = "401", description = "Não autorizado"), //
+			@ApiResponse(responseCode = "403", description = "Não possui permissão para acessar o recurso"), //
+			@ApiResponse(responseCode = "404", description = "Não encontrado") //
+	})
 	@PostMapping
 	public ResponseEntity<PautaOutputDTO> salvar(@Valid @RequestBody PautaInputDTO pautaInputDTO) throws JsonProcessingException {
 		LOGGER.trace("PautaResource/salvar( " + objectMapper.writeValueAsString(pautaInputDTO) + ") foi chamado");
@@ -71,7 +95,13 @@ public class PautaResource {
 		return ResponseEntity.status(HttpStatus.CREATED).body(pautaOutputDTO);
 	}
 
-	@ApiOperation(value = "Deleta pauta pelo ID ")
+	@Operation(summary = "deleteById", description = "Deleta pauta pelo ID")
+	@ApiResponses(value = { //
+			@ApiResponse(responseCode = "201", description = "Sucesso", content = @Content(schema = @Schema(implementation = PautaOutputDTO.class))), //
+			@ApiResponse(responseCode = "204", description = "Sem conteúdo"), //
+			@ApiResponse(responseCode = "401", description = "Não autorizado"), //
+			@ApiResponse(responseCode = "403", description = "Não possui permissão para acessar o recurso") //
+	})
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<PautaOutputDTO> deleteById(@PathVariable Long id) {
 		LOGGER.trace("PautaResource/deleteById(" + id + ") foi chamado");
