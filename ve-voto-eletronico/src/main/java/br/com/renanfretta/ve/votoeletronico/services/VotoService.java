@@ -39,13 +39,14 @@ public class VotoService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(VotoService.class);
 
 	public static final String STATUS_ABLE_TO_VOTE = "ABLE_TO_VOTE";
+	public static final String STATUS_UNABLE_TO_VOTE = "UNABLE_TO_VOTE";
 
 	@Autowired
 	private ObjectMapper objectMapper;
 
 	@Autowired
 	private OrikaMapper orikaMapper;
-	
+
 	@Autowired
 	private MessagesProperty messagesProperty;
 
@@ -60,7 +61,7 @@ public class VotoService {
 
 	@Autowired
 	private UsuarioService usuarioService;
-	
+
 	@Autowired
 	private PautaService pautaService;
 
@@ -111,7 +112,7 @@ public class VotoService {
 	}
 
 	private void validaHorarioVotacao(Date dataVotacao, SessaoVotacaoOutputDTO sessaoVotacaoOutputDTO) throws ErroTratadoRestException, JsonProcessingException {
-		if (dataVotacao.after(sessaoVotacaoOutputDTO.getDataHoraFim())) {
+		if (dataVotacao.before(sessaoVotacaoOutputDTO.getDataHoraInicio()) || dataVotacao.after(sessaoVotacaoOutputDTO.getDataHoraFim())) {
 			LOGGER.warn("VotoRepository/validaHorarioVotacao(" + objectMapper.writeValueAsString(sessaoVotacaoOutputDTO) + ", " + dataVotacao
 					+ ") não pode votar > ultrapassou o horário máximo de votação");
 			throw new ErroTratadoRestException(messagesProperty.getMessage(MessagesPropertyEnum.RN__SESSAO_VOTACAO_ENCERRADA));
@@ -119,10 +120,10 @@ public class VotoService {
 	}
 
 	public List<RelatorioVotosContabilizadosOutputDTO> contabilizaVotos(Long idPauta) {
-		
+
 		// Valida se a pauta existe
 		pautaService.findById(idPauta);
-		
+
 		List<RelatorioVotosContabilizadosOutputDTO> list = repository.contabilizaVotos(idPauta);
 		return list;
 	}
