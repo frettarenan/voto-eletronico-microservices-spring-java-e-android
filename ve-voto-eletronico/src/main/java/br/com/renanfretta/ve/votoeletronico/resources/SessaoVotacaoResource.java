@@ -19,7 +19,11 @@ import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoInpu
 import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.exceptions.ErroTratadoRestException;
 import br.com.renanfretta.ve.votoeletronico.services.SessaoVotacaoService;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping(value = "/sessao-votacao")
@@ -33,7 +37,13 @@ public class SessaoVotacaoResource {
 	@Autowired
 	private SessaoVotacaoService service;
 
-	@ApiOperation(value = "Cadastra uma nova sessão e inicia votação")
+	@Operation(summary = "salvarEIniciar", description = "Cadastra uma nova sessão e inicia votação")
+	@ApiResponses(value = { //
+			@ApiResponse(responseCode = "201", description = "Recurso criado", content = @Content(schema = @Schema(implementation = SessaoVotacaoOutputDTO.class))), //
+			@ApiResponse(responseCode = "401", description = "Não autorizado"), //
+			@ApiResponse(responseCode = "403", description = "Não possui permissão para acessar o recurso"), //
+			@ApiResponse(responseCode = "404", description = "Não encontrado") //
+	})
 	@PostMapping
 	public ResponseEntity<SessaoVotacaoOutputDTO> salvarEIniciar(@Valid @RequestBody SessaoVotacaoInputDTO sessaoVotacaoInputDTO) throws JsonProcessingException, ErroTratadoRestException {
 		LOGGER.trace("SessaoVotacaoResource/salvarEIniciar executado com o seguinte parâmetro entrada: sessaoVotacaoInputDTO: " + objectMapper.writeValueAsString(sessaoVotacaoInputDTO));

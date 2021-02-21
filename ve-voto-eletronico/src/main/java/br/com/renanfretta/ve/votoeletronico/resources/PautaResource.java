@@ -83,7 +83,7 @@ public class PautaResource {
 
 	@Operation(summary = "salvar", description = "Cadastra uma nova pauta")
 	@ApiResponses(value = { //
-			@ApiResponse(responseCode = "201", description = "Sucesso", content = @Content(schema = @Schema(implementation = PautaOutputDTO.class))), //
+			@ApiResponse(responseCode = "201", description = "Recurso criado", content = @Content(schema = @Schema(implementation = PautaOutputDTO.class))), //
 			@ApiResponse(responseCode = "401", description = "Não autorizado"), //
 			@ApiResponse(responseCode = "403", description = "Não possui permissão para acessar o recurso"), //
 			@ApiResponse(responseCode = "404", description = "Não encontrado") //
@@ -97,7 +97,7 @@ public class PautaResource {
 
 	@Operation(summary = "deleteById", description = "Deleta pauta pelo ID")
 	@ApiResponses(value = { //
-			@ApiResponse(responseCode = "201", description = "Sucesso", content = @Content(schema = @Schema(implementation = PautaOutputDTO.class))), //
+			@ApiResponse(responseCode = "200", description = "Sucesso", content = @Content(schema = @Schema(implementation = PautaOutputDTO.class))), //
 			@ApiResponse(responseCode = "204", description = "Sem conteúdo"), //
 			@ApiResponse(responseCode = "401", description = "Não autorizado"), //
 			@ApiResponse(responseCode = "403", description = "Não possui permissão para acessar o recurso") //
