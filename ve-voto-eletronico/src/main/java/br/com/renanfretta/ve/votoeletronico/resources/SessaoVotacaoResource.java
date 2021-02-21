@@ -19,6 +19,7 @@ import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoInpu
 import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.exceptions.ErroTratadoRestException;
 import br.com.renanfretta.ve.votoeletronico.services.SessaoVotacaoService;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value = "/sessao-votacao")
@@ -32,6 +33,7 @@ public class SessaoVotacaoResource {
 	@Autowired
 	private SessaoVotacaoService service;
 
+	@ApiOperation(value = "Cadastra uma nova sessão e inicia votação")
 	@PostMapping
 	public ResponseEntity<SessaoVotacaoOutputDTO> salvarEIniciar(@Valid @RequestBody SessaoVotacaoInputDTO sessaoVotacaoInputDTO) throws JsonProcessingException, ErroTratadoRestException {
 		LOGGER.trace("SessaoVotacaoResource/salvarEIniciar executado com o seguinte parâmetro entrada: sessaoVotacaoInputDTO: " + objectMapper.writeValueAsString(sessaoVotacaoInputDTO));

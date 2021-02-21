@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.services.PautaService;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value = "/pauta")
@@ -36,6 +37,7 @@ public class PautaResource {
 	@Autowired
 	private PautaService service;
 
+	@ApiOperation(value = "Lista todas as pautas cadastradas")
 	@GetMapping
 	public ResponseEntity<List<PautaOutputDTO>> findAll() {
 		LOGGER.trace("PautaResource/findAll foi chamado");
@@ -47,6 +49,7 @@ public class PautaResource {
 		return ResponseEntity.ok(list);
 	}
 
+	@ApiOperation(value = "Consulta pauta pelo ID ")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<PautaOutputDTO> findById(@PathVariable Long id) {
 		LOGGER.trace("PautaResource/findById(" + id + ") foi chamado");
@@ -59,6 +62,7 @@ public class PautaResource {
 		}
 	}
 
+	@ApiOperation(value = "Cadastra uma nova pauta")
 	@PostMapping
 	public ResponseEntity<PautaOutputDTO> salvar(@Valid @RequestBody PautaOutputDTO pautaDTO) throws JsonProcessingException {
 		LOGGER.trace("PautaResource/salvar( " + objectMapper.writeValueAsString(pautaDTO) + ") foi chamado");
@@ -66,6 +70,7 @@ public class PautaResource {
 		return ResponseEntity.status(HttpStatus.CREATED).body(pautaDTO);
 	}
 
+	@ApiOperation(value = "Deleta pauta pelo ID ")
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<PautaOutputDTO> deleteById(@PathVariable Long id) {
 		LOGGER.trace("PautaResource/deleteById(" + id + ") foi chamado");

@@ -24,6 +24,7 @@ import br.com.renanfretta.ve.votoeletronico.dtos.voto.VotoInputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.voto.VotoOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.exceptions.ErroTratadoRestException;
 import br.com.renanfretta.ve.votoeletronico.services.VotoService;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value = "/voto")
@@ -37,6 +38,7 @@ public class VotoResource {
 	@Autowired
 	private VotoService service;
 
+	@ApiOperation(value = "Salva o voto")
 	@PostMapping
 	public ResponseEntity<VotoOutputDTO> votar(@Valid @RequestBody VotoInputDTO votoInputDTO) throws ErroTratadoRestException, JsonProcessingException {
 		LOGGER.trace("VotoResource/votar executado com o seguinte parâmetro entrada: votoInputDTO: " + objectMapper.writeValueAsString(votoInputDTO));
@@ -44,6 +46,7 @@ public class VotoResource {
 		return ResponseEntity.status(HttpStatus.CREATED).body(votoOutputDTO);
 	}
 
+	@ApiOperation(value = "Consulta total de votos pelo ID da pauta informada")
 	@GetMapping(value = "/contabilizados/pauta/{idPauta}")
 	public ResponseEntity<List<RelatorioVotosContabilizadosOutputDTO>> contabilizaVotos(@PathVariable Long idPauta) {
 		LOGGER.trace("VotoResource/contabilizaVotos(" + idPauta + ") foi chamado");
