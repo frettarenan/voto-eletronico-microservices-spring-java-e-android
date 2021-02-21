@@ -36,19 +36,12 @@
 			<dependency>
 				<groupId>br.com.renanfretta.voto-eletronico-microservices-spring-java-e-android</groupId>
 				<artifactId>ve-commons</artifactId>
-				<version>${version}</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>ma.glasnost.orika</groupId>
 				<artifactId>orika-core</artifactId>
 				<version>${ma.glasnost.orika.orika-core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Hoxton.SR8</version>
-				<type>pom</type>
-				<scope>import</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>

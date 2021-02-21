@@ -12,12 +12,12 @@ import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.sessaovotacao.SessaoVotacaoInputDTO;
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.sessaovotacao.SessaoVotacaoOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.configs.OrikaMapper;
 import br.com.renanfretta.ve.votoeletronico.configs.properties.YamlConfig;
+import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoInputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.entities.SessaoVotacao;
-import br.com.renanfretta.ve.votoeletronico.repositories.SessaoVotacaoRepository;
+import br.com.renanfretta.ve.votoeletronico.repositories.sessaovotacao.SessaoVotacaoRepository;
 
 @Service
 @Validated

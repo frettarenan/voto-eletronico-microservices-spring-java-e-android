@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import br.com.renanfretta.ve.commons.dtos.usuario.UsuarioDTO;
 import br.com.renanfretta.ve.votoeletronico.configs.OrikaMapper;
 import br.com.renanfretta.ve.votoeletronico.entities.Usuario;
-import br.com.renanfretta.ve.votoeletronico.repositories.UsuarioRepository;
+import br.com.renanfretta.ve.votoeletronico.repositories.usuario.UsuarioRepository;
 
 @Service
 @Validated

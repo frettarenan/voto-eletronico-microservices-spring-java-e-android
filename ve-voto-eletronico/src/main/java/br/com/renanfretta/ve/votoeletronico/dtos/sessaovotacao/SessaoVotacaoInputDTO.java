@@ -1,8 +1,8 @@
-package br.com.renanfretta.ve.commons.dtos.votoeletronico.sessaovotacao;
+package br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao;
 
 import java.io.Serializable;
 
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.PautaDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +18,7 @@ public class SessaoVotacaoInputDTO implements Serializable {
 
 	private static final long serialVersionUID = -6687765329932958403L;
 
-	private PautaDTO pauta;
+	private PautaOutputDTO pauta;
 
 	private Integer minutosParaVotacao;
 

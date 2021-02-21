@@ -11,10 +11,10 @@ import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.PautaDTO;
 import br.com.renanfretta.ve.votoeletronico.configs.OrikaMapper;
+import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.entities.Pauta;
-import br.com.renanfretta.ve.votoeletronico.repositories.PautaRepository;
+import br.com.renanfretta.ve.votoeletronico.repositories.pauta.PautaRepository;
 
 @Service
 @Validated
@@ -31,34 +31,34 @@ public class PautaService {
 	@Autowired
 	private PautaRepository repository;
 
-	public List<PautaDTO> findAll() {
+	public List<PautaOutputDTO> findAll() {
 		List<Pauta> list = repository.findAll();
 		LOGGER.trace("PautaRepository/findAll teve êxito");
-		List<PautaDTO> listDTO = orikaMapper.mapAsList(list, PautaDTO.class);
+		List<PautaOutputDTO> listDTO = orikaMapper.mapAsList(list, PautaOutputDTO.class);
 		return listDTO;
 	}
 
-	public PautaDTO findById(Long id) {
+	public PautaOutputDTO findById(Long id) {
 		Pauta pauta = repository.findById(id).orElseThrow();
 		LOGGER.trace("PautaRepository/findById(" + id + ") teve êxito");
-		PautaDTO dto = orikaMapper.map(pauta, PautaDTO.class);
+		PautaOutputDTO dto = orikaMapper.map(pauta, PautaOutputDTO.class);
 		return dto;
 	}
 
-	public PautaDTO save(PautaDTO pautaDTO) throws JsonProcessingException {
-		Pauta pauta = orikaMapper.map(pautaDTO, Pauta.class);
+	public PautaOutputDTO save(PautaOutputDTO pautaOutputDTO) throws JsonProcessingException {
+		Pauta pauta = orikaMapper.map(pautaOutputDTO, Pauta.class);
 		pauta = repository.save(pauta);
-		LOGGER.trace("PautaRepository/save(" + objectMapper.writeValueAsString(pautaDTO) + ") teve êxito");
-		pautaDTO = findById(pauta.getId());
-		return pautaDTO;
+		LOGGER.trace("PautaRepository/save(" + objectMapper.writeValueAsString(pautaOutputDTO) + ") teve êxito");
+		pautaOutputDTO = findById(pauta.getId());
+		return pautaOutputDTO;
 	}
 
-	public PautaDTO deleteById(Long id) {
+	public PautaOutputDTO deleteById(Long id) {
 		Pauta pauta = repository.findById(id).orElseThrow();
 		LOGGER.trace("PautaRepository/findById(" + id + ") teve êxito");
 		repository.delete(pauta);
 		LOGGER.trace("PautaRepository/deleteById(" + id + ") teve êxito");
-		PautaDTO dto = orikaMapper.map(pauta, PautaDTO.class);
+		PautaOutputDTO dto = orikaMapper.map(pauta, PautaOutputDTO.class);
 		return dto;
 	}
 

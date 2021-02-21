@@ -3,6 +3,7 @@ services:
   rf-mysql-voto-eletronico:
     image: mysql:5.7
     container_name: rf-mysql-voto-eletronico
+    command: mysqld --sql_mode=""
     environment:
       MYSQL_DATABASE: rf-voto-eletronico
       MYSQL_USER: renanfretta

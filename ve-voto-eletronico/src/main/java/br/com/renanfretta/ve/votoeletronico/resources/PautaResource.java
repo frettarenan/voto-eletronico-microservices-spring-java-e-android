@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.PautaDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.services.PautaService;
 
 @RestController
@@ -37,9 +37,9 @@ public class PautaResource {
 	private PautaService service;
 
 	@GetMapping
-	public ResponseEntity<List<PautaDTO>> findAll() {
+	public ResponseEntity<List<PautaOutputDTO>> findAll() {
 		LOGGER.trace("PautaResource/findAll foi chamado");
-		List<PautaDTO> list = service.findAll();
+		List<PautaOutputDTO> list = service.findAll();
 		if (list == null || list.isEmpty()) {
 			LOGGER.trace("PautaResource/findAll noContent");
 			return ResponseEntity.noContent().build();
@@ -48,10 +48,10 @@ public class PautaResource {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<PautaDTO> findById(@PathVariable Long id) {
+	public ResponseEntity<PautaOutputDTO> findById(@PathVariable Long id) {
 		LOGGER.trace("PautaResource/findById(" + id + ") foi chamado");
 		try {
-			PautaDTO pautaDTO = service.findById(id);
+			PautaOutputDTO pautaDTO = service.findById(id);
 			return ResponseEntity.ok(pautaDTO);
 		} catch (NoSuchElementException e) {
 			LOGGER.warn("PautaResource/findById(" + id + ") NoSuchElementException");
@@ -60,17 +60,17 @@ public class PautaResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<PautaDTO> salvar(@Valid @RequestBody PautaDTO pautaDTO) throws JsonProcessingException {
+	public ResponseEntity<PautaOutputDTO> salvar(@Valid @RequestBody PautaOutputDTO pautaDTO) throws JsonProcessingException {
 		LOGGER.trace("PautaResource/salvar( " + objectMapper.writeValueAsString(pautaDTO) + ") foi chamado");
 		pautaDTO = service.save(pautaDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(pautaDTO);
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<PautaDTO> deleteById(@PathVariable Long id) {
+	public ResponseEntity<PautaOutputDTO> deleteById(@PathVariable Long id) {
 		LOGGER.trace("PautaResource/deleteById(" + id + ") foi chamado");
 		try {
-			PautaDTO pautaDTO = service.deleteById(id);
+			PautaOutputDTO pautaDTO = service.deleteById(id);
 			return ResponseEntity.ok(pautaDTO);
 		} catch (NoSuchElementException e) {
 			LOGGER.warn("PautaResource/deleteById(" + id + ") NoSuchElementException");

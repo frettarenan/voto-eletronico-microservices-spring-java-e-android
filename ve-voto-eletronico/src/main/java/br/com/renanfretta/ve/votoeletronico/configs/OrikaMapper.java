@@ -4,11 +4,11 @@ import org.springframework.stereotype.Component;
 
 import br.com.renanfretta.ve.commons.configs.OrikaMapperBase;
 import br.com.renanfretta.ve.commons.dtos.usuario.UsuarioDTO;
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.PautaDTO;
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.sessaovotacao.SessaoVotacaoInputDTO;
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.sessaovotacao.SessaoVotacaoOutputDTO;
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.voto.VotoInputDTO;
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.voto.VotoOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoInputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.voto.VotoInputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.voto.VotoOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.entities.Pauta;
 import br.com.renanfretta.ve.votoeletronico.entities.SessaoVotacao;
 import br.com.renanfretta.ve.votoeletronico.entities.Usuario;
@@ -29,7 +29,7 @@ public class OrikaMapper extends OrikaMapperBase {
 				.constructorA().constructorB().mapNulls(true).mapNullsInReverse(true) //
 				.byDefault().register();
 
-		factory.classMap(Pauta.class, PautaDTO.class) //
+		factory.classMap(Pauta.class, PautaOutputDTO.class) //
 				.constructorA().constructorB().mapNulls(true).mapNullsInReverse(true) //
 				.byDefault().register();
 

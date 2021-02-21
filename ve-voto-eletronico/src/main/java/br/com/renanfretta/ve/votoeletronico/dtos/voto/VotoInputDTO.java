@@ -1,9 +1,9 @@
-package br.com.renanfretta.ve.commons.dtos.votoeletronico.voto;
+package br.com.renanfretta.ve.votoeletronico.dtos.voto;
 
 import java.io.Serializable;
 
 import br.com.renanfretta.ve.commons.dtos.usuario.UsuarioDTO;
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.sessaovotacao.SessaoVotacaoOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoOutputDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

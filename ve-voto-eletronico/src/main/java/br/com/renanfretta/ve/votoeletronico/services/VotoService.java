@@ -1,6 +1,7 @@
 package br.com.renanfretta.ve.votoeletronico.services;
 
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,18 +16,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.renanfretta.ve.commons.dtos.usuario.UsuarioDTO;
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.sessaovotacao.SessaoVotacaoOutputDTO;
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.voto.VotoInputDTO;
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.voto.VotoOutputDTO;
 import br.com.renanfretta.ve.commons.integracoes.userinfo.users.UserInfoApiUsersFindByCpfOutput;
 import br.com.renanfretta.ve.votoeletronico.configs.OrikaMapper;
 import br.com.renanfretta.ve.votoeletronico.configs.properties.MessagesProperty;
 import br.com.renanfretta.ve.votoeletronico.configs.properties.YamlConfig;
+import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.voto.RelatorioVotosContabilizadosOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.voto.VotoInputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.voto.VotoOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.entities.Pauta;
 import br.com.renanfretta.ve.votoeletronico.entities.Voto;
 import br.com.renanfretta.ve.votoeletronico.enums.MessagesPropertyEnum;
 import br.com.renanfretta.ve.votoeletronico.exceptions.ErroTratadoRestException;
-import br.com.renanfretta.ve.votoeletronico.repositories.VotoRepository;
+import br.com.renanfretta.ve.votoeletronico.repositories.voto.VotoRepository;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -57,8 +60,11 @@ public class VotoService {
 
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private PautaService pautaService;
 
-	private VotoOutputDTO findById(Long id) {
+	public VotoOutputDTO findById(Long id) {
 		Voto voto = repository.findById(id).orElseThrow();
 		LOGGER.trace("VotoRepository/findById(" + id + ") teve êxito");
 		VotoOutputDTO dto = orikaMapper.map(voto, VotoOutputDTO.class);
@@ -110,6 +116,16 @@ public class VotoService {
 					+ ") não pode votar > ultrapassou o horário máximo de votação");
 			throw new ErroTratadoRestException(messagesProperty.getMessage(MessagesPropertyEnum.RN__SESSAO_VOTACAO_ENCERRADA));
 		}
+	}
+
+	public List<RelatorioVotosContabilizadosOutputDTO> contabilizaVotos(Long idPauta) {
+		
+		// validaSePautaExiste()
+		PautaOutputDTO pautaOutputDTO = pautaService.findById(idPauta);
+		// Valida se a pauta foi encerrada -> faltou finalizar a pauta
+		
+		List<RelatorioVotosContabilizadosOutputDTO> list = repository.contabilizaVotos(idPauta);
+		return list;
 	}
 
 }

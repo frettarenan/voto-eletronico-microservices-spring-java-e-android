@@ -1,11 +1,12 @@
-package br.com.renanfretta.ve.commons.dtos.votoeletronico.sessaovotacao;
+package br.com.renanfretta.ve.votoeletronico.dtos.voto;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.renanfretta.ve.commons.dtos.votoeletronico.PautaDTO;
+import br.com.renanfretta.ve.commons.dtos.usuario.UsuarioDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,19 +18,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SessaoVotacaoOutputDTO implements Serializable {
+public class VotoOutputDTO implements Serializable {
 
-	private static final long serialVersionUID = -558417135085492895L;
+	private static final long serialVersionUID = 8331417390821624623L;
 
 	@EqualsAndHashCode.Include
 	private Long id;
 
-	private PautaDTO pauta;
+	private PautaOutputDTO pauta;
+
+	private UsuarioDTO usuario;
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date dataHoraInicio;
+	private Date dataHoraVotacao;
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date dataHoraFim;
+	private Boolean voto;
 
 }
