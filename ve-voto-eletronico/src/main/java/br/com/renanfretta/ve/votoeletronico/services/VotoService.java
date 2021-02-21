@@ -2,6 +2,7 @@ package br.com.renanfretta.ve.votoeletronico.services;
 
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,6 @@ import br.com.renanfretta.ve.commons.integracoes.userinfo.users.UserInfoApiUsers
 import br.com.renanfretta.ve.votoeletronico.configs.OrikaMapper;
 import br.com.renanfretta.ve.votoeletronico.configs.properties.MessagesProperty;
 import br.com.renanfretta.ve.votoeletronico.configs.properties.YamlConfig;
-import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.voto.RelatorioVotosContabilizadosOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.voto.VotoInputDTO;
@@ -45,15 +45,15 @@ public class VotoService {
 
 	@Autowired
 	private OrikaMapper orikaMapper;
+	
+	@Autowired
+	private MessagesProperty messagesProperty;
 
 	@Autowired
 	private VotoRepository repository;
 
 	@Autowired
 	private YamlConfig yamlConfig;
-
-	@Autowired
-	private MessagesProperty messagesProperty;
 
 	@Autowired
 	private SessaoVotacaoService sessaoVotacaoService;
@@ -65,7 +65,7 @@ public class VotoService {
 	private PautaService pautaService;
 
 	public VotoOutputDTO findById(Long id) {
-		Voto voto = repository.findById(id).orElseThrow();
+		Voto voto = repository.findById(id).orElseThrow(() -> new NoSuchElementException(messagesProperty.getMessage(MessagesPropertyEnum.ERRO__REGISTRO_NAO_ENCONTRADO_ENTIDADE_VOTO)));
 		LOGGER.trace("VotoRepository/findById(" + id + ") teve êxito");
 		VotoOutputDTO dto = orikaMapper.map(voto, VotoOutputDTO.class);
 		return dto;
@@ -120,9 +120,8 @@ public class VotoService {
 
 	public List<RelatorioVotosContabilizadosOutputDTO> contabilizaVotos(Long idPauta) {
 		
-		// validaSePautaExiste()
-		PautaOutputDTO pautaOutputDTO = pautaService.findById(idPauta);
-		// Valida se a pauta foi encerrada -> faltou finalizar a pauta
+		// Valida se a pauta existe
+		pautaService.findById(idPauta);
 		
 		List<RelatorioVotosContabilizadosOutputDTO> list = repository.contabilizaVotos(idPauta);
 		return list;

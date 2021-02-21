@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoInputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.exceptions.ErroTratadoRestException;
 import br.com.renanfretta.ve.votoeletronico.services.SessaoVotacaoService;
 
 @RestController
@@ -32,7 +33,7 @@ public class SessaoVotacaoResource {
 	private SessaoVotacaoService service;
 
 	@PostMapping
-	public ResponseEntity<SessaoVotacaoOutputDTO> salvarEIniciar(@Valid @RequestBody SessaoVotacaoInputDTO sessaoVotacaoInputDTO) throws JsonProcessingException {
+	public ResponseEntity<SessaoVotacaoOutputDTO> salvarEIniciar(@Valid @RequestBody SessaoVotacaoInputDTO sessaoVotacaoInputDTO) throws JsonProcessingException, ErroTratadoRestException {
 		LOGGER.trace("SessaoVotacaoResource/salvarEIniciar executado com o seguinte parâmetro entrada: sessaoVotacaoInputDTO: " + objectMapper.writeValueAsString(sessaoVotacaoInputDTO));
 		SessaoVotacaoOutputDTO sessaoVotacaoOutputDTO = service.save(sessaoVotacaoInputDTO);
 		return ResponseEntity.status(HttpStatus.CREATED).body(sessaoVotacaoOutputDTO);
