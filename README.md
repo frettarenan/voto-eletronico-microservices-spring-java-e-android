@@ -11,7 +11,7 @@ Objetivos:
 
 ## Configuração do Postman
 
-    Importe o arquivo: "./postman/microservices-spring-java.postman_collection.json"
+    Importe o arquivo: "./postman/voto-eletronico-microservices-spring-java-e-android.postman_collection.json"
 
 ## Procedimento para ligar o servidor de banco de dados
 
