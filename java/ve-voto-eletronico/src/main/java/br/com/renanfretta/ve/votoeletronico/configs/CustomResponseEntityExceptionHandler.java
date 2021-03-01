@@ -3,6 +3,7 @@ package br.com.renanfretta.ve.votoeletronico.configs;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.hibernate.exception.ConstraintViolationException;
@@ -32,6 +33,14 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
 	@ExceptionHandler({ ErroTratadoRestException.class })
 	public ResponseEntity<Object> handleMethodArgumentTypeMismatch(ErroTratadoRestException ex, WebRequest request) {
+		String mensagemUsuario = ex.getMessage();
+		String mensagemDesenvolvedor = ex.getCause() != null ? ex.getCause().toString() : ex.toString();
+		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY, request);
+	}
+	
+	@ExceptionHandler({ NoSuchElementException.class })
+	public ResponseEntity<Object> handleMethodArgumentTypeMismatch(NoSuchElementException ex, WebRequest request) {
 		String mensagemUsuario = ex.getMessage();
 		String mensagemDesenvolvedor = ex.getCause() != null ? ex.getCause().toString() : ex.toString();
 		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
