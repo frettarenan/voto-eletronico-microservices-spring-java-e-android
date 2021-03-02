@@ -17,9 +17,9 @@ public class ToastUtil {
         showMessage(currentActivity, "Operação concluída com sucesso.");
     }
 
-    private static void showMessageErro(Activity currentActivity, Exception e, String mensagem) {
-        if (e != null) {
-            e.printStackTrace();
+    private static void showMessageErro(Activity currentActivity, Throwable t, String mensagem) {
+        if (t != null) {
+            t.printStackTrace();
         }
         showMessage(currentActivity, mensagem);
     }
@@ -28,8 +28,8 @@ public class ToastUtil {
         showMessageErro(currentActivity, e, "Ocorreu um erro ao executar a operação, tente novamente.");
     }
 
-    public static void showMessageErroComunicacaoWebService(Activity currentActivity, Exception e) {
-        showMessageErro(currentActivity, e, "Ocorreu um erro de comunicação com o servidor. A operação foi cancelada.");
+    public static void showMessageErroComunicacaoWebService(Activity currentActivity, Throwable t) {
+        showMessageErro(currentActivity, t, "Ocorreu um erro de comunicação com o servidor. A operação foi cancelada.");
     }
 
     public static void showMessageBackButtonDisabled(Activity currentActivity) {

@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_server_url">http://192.168.0.103:8080</string>
+
     <string name="app_name">Assembleia Digital</string>
     <string name="app_version">versão 1.0.0</string>
     <string name="app_name_first_name">Assembleia</string>
@@ -10,6 +12,12 @@
     <string name="pesquisar">Pesquisar</string>
 
     <string name="no_result_message">Sem resultados</string>
+
+    <!-- AlertDialog - Titles -->
+    <string name="alert_dialog_question_title">Confirmação</string>
+
+    <!-- AlertDialog - Messages -->
+    <string name="alert_dialog_question_message_delete_database_record">Você tem certeza que deseja remover este item?</string>
 
     <!-- Login -->
     <string name="login_titulo">Acesso restrito ao sistema</string>

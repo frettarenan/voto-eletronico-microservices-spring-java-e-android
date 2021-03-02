@@ -15,6 +15,7 @@ import java.util.List;
 import br.com.renanfretta.votoeletronico.R;
 import br.com.renanfretta.votoeletronico.dtos.PautaResultadoConsultaDTO;
 import br.com.renanfretta.votoeletronico.utils.HtmlString;
+import br.com.renanfretta.votoeletronico.utils.ToastUtil;
 
 public class PautaConsultaRecyclerViewAdapter extends RecyclerView.Adapter<PautaConsultaRecyclerViewAdapter.ViewHolder> {
 
@@ -56,6 +57,7 @@ public class PautaConsultaRecyclerViewAdapter extends RecyclerView.Adapter<Pauta
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ToastUtil.showMessage(activity, "Usuário clicou no item ID: " + dto.getId());
                 // FIXME: Falta implementar
                 // ActivityUtil.startActivity(activity, PautaCadastroActivity.class, dto.getId(), false);
             }
