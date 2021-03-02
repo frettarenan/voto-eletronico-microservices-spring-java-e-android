@@ -31,8 +31,15 @@ public class SharedPreferencesUtil {
     public String getString(String key) {
         return settings.getString(key, null);
     }
-    public int getInt(String key) { return settings.getInt(key, -1); }
-    public int getInt(String key, int defValue) { return settings.getInt(key, defValue); }
+
+    public int getInt(String key) {
+        return settings.getInt(key, -1);
+    }
+
+    public int getInt(String key, int defValue) {
+        return settings.getInt(key, defValue);
+    }
+
     public boolean getBoolean(String key) {
         return settings.getBoolean(key, false);
     }

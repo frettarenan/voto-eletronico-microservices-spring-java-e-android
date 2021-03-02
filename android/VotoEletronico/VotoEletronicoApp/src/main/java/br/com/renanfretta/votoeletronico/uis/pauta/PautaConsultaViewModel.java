@@ -1,7 +1,5 @@
 package br.com.renanfretta.votoeletronico.uis.pauta;
 
-import android.os.Handler;
-
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;

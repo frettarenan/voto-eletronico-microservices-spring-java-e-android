@@ -10,11 +10,11 @@ public class ToastUtil {
     }
 
     public static void showMessageVerifiqueFormulario(Activity currentActivity) {
-        showMessage(currentActivity,"Verifique os erros destacados no formulário e tente novamente.");
+        showMessage(currentActivity, "Verifique os erros destacados no formulário e tente novamente.");
     }
 
     public static void showMessageSucesso(Activity currentActivity) {
-        showMessage(currentActivity,"Operação concluída com sucesso.");
+        showMessage(currentActivity, "Operação concluída com sucesso.");
     }
 
     private static void showMessageErro(Activity currentActivity, Exception e, String mensagem) {
@@ -25,11 +25,11 @@ public class ToastUtil {
     }
 
     public static void showMessageErroPadrao(Activity currentActivity, Exception e) {
-        showMessageErro(currentActivity, e,"Ocorreu um erro ao executar a operação, tente novamente.");
+        showMessageErro(currentActivity, e, "Ocorreu um erro ao executar a operação, tente novamente.");
     }
 
     public static void showMessageErroComunicacaoWebService(Activity currentActivity, Exception e) {
-        showMessageErro(currentActivity, e,"Ocorreu um erro de comunicação com o servidor. A operação foi cancelada.");
+        showMessageErro(currentActivity, e, "Ocorreu um erro de comunicação com o servidor. A operação foi cancelada.");
     }
 
     public static void showMessageBackButtonDisabled(Activity currentActivity) {
