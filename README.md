@@ -28,9 +28,9 @@ Objetivos:
 
 ## Demonstração da app mobile
 
-    * https://youtu.be/LGQcJlMydFI
+* https://youtu.be/LGQcJlMydFI
 
 ### Para rodar o projeto Mobile, você vai precisar:
 
-    * Android Studio: https://developer.android.com/studio
-    * Instalar o Lombok Plugin para o Android Studio na tela de plugins dentro da IDE
+* Android Studio: https://developer.android.com/studio
+* Instalar o Lombok Plugin para o Android Studio na tela de plugins dentro da IDE
