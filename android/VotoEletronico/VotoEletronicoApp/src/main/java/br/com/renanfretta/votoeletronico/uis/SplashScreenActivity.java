@@ -1,4 +1,4 @@
-package br.com.renanfretta.votoeletronico.ui;
+package br.com.renanfretta.votoeletronico.uis;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.os.StrictMode;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.renanfretta.votoeletronico.R;
+import br.com.renanfretta.votoeletronico.utils.SessaoUsuarioUtil;
+import br.com.renanfretta.votoeletronico.utils.SharedPreferencesUtil;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -36,7 +38,16 @@ public class SplashScreenActivity extends AppCompatActivity {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
             }
-            startActivity(new Intent(this, PrincipalActivity.class));
+
+            boolean isPermanecerConectado = SharedPreferencesUtil.getInstance(getApplicationContext()).getBoolean(SharedPreferencesUtil.PERMANECER_CONECTADO);
+            boolean isUsuarioLogado = SessaoUsuarioUtil.getInstance(currentActivity).isUsuarioLogado();
+
+            if (isPermanecerConectado && isUsuarioLogado) {
+                startActivity(new Intent(this, PrincipalActivity.class));
+                return;
+            }
+
+            startActivity(new Intent(this, LoginActivity.class));
         } finally {
             finish();
         }

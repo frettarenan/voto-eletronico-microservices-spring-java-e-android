@@ -13,11 +13,25 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/colorPrimary</item>
         <!-- Customize your theme here. -->
         <item name="android:colorBackground">@color/white</item>
+        <item name="toolbarStyle">@style/Theme.VotoEletronico.Widget.MaterialComponents.Toolbar.PrimarySurface</item>
+        <item name="appBarLayoutStyle">@style/Theme.VotoEletronico.Widget.MaterialComponents.AppBarLayout.Surface</item>
     </style>
 
-    <style name="Theme.VotoEletronico.NoActionBar">
+    <!-- Sobreescrevi o tema da barra superior do app para trocar as cores dos elementos da barra de título -->
+    <style name="Theme.VotoEletronico.Widget.MaterialComponents.Toolbar.PrimarySurface" parent="@style/Widget.MaterialComponents.Toolbar.PrimarySurface">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="titleTextColor">@color/white</item>
+    </style>
+
+    <!-- Sobreescrevi para colocar a cor de fundo branca ao abrir as telas -->
+    <style name="Theme.VotoEletronico.NoActionBar" parent="Theme.VotoEletronico">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Sobreescrevi para colocar a cor de fundo branca do conteúdo das telas -->
+    <style name="Theme.VotoEletronico.Widget.MaterialComponents.AppBarLayout.Surface" parent="Widget.MaterialComponents.AppBarLayout.Surface">
+        <item name="android:background">@color/white</item>
     </style>
 
     <style name="Theme.VotoEletronico.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

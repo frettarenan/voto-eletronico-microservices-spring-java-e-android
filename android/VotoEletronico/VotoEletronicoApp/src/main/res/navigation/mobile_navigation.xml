@@ -7,20 +7,20 @@
 
     <fragment
         android:id="@+id/nav_inicio"
-        android:name="br.com.renanfretta.votoeletronico.ui.inicio.InicioFragment"
+        android:name="br.com.renanfretta.votoeletronico.uis.inicio.InicioFragment"
         android:label="@string/menu_inicio"
-        tools:layout="@layout/fragment_inicio" />
+        tools:layout="@layout/inicio_fragment" />
 
     <fragment
         android:id="@+id/nav_pauta"
-        android:name="br.com.renanfretta.votoeletronico.ui.pauta.PautaConsultaFragment"
+        android:name="br.com.renanfretta.votoeletronico.uis.pauta.PautaConsultaFragment"
         android:label="@string/menu_pauta"
-        tools:layout="@layout/fragment_pauta_consulta" />
+        tools:layout="@layout/pauta_consulta_fragment" />
 
     <fragment
         android:id="@+id/nav_sessao_votacao"
-        android:name="br.com.renanfretta.votoeletronico.ui.sessaovotacao.SessaoVotacaoConsultaFragment"
+        android:name="br.com.renanfretta.votoeletronico.uis.sessaovotacao.SessaoVotacaoConsultaFragment"
         android:label="@string/menu_sessao_votacao"
-        tools:layout="@layout/fragment_sessao_votacao_consulta" />
+        tools:layout="@layout/sessao_votacao_consulta_fragment" />
 
 </navigation>

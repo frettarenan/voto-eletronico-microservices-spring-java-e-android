@@ -1,8 +1,23 @@
 <resources>
     <string name="app_name">Assembleia Digital</string>
     <string name="app_version">versão 1.0.0</string>
+    <string name="app_name_first_name">Assembleia</string>
+    <string name="app_name_second_name">Digital</string>
 
     <string name="menu_inicio">Início</string>
     <string name="menu_pauta">Pautas</string>
     <string name="menu_sessao_votacao">Sessões de votação</string>
+    <string name="pesquisar">Pesquisar</string>
+
+    <string name="no_result_message">Sem resultados</string>
+
+    <!-- Login -->
+    <string name="login_titulo">Acesso restrito ao sistema</string>
+    <string name="login_acessar">Acessar</string>
+    <string name="login_usuario">Usuário</string>
+    <string name="login_senha">Senha</string>
+    <string name="login_sair_desta_conta">Sair desta conta</string>
+    <string name="login_permanecer_conectado">Permanecer conectado</string>
+    <string name="login_usuario_invalido">Usuário e senha inválidos</string>
+
 </resources>

@@ -3,17 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_inicio"
-            android:title="@string/menu_inicio" />
+    <item
+        android:id="@+id/nav_inicio"
+        android:title="@string/menu_inicio" />
 
-        <item
-            android:id="@+id/nav_pauta"
-            android:title="@string/menu_pauta" />
+    <item
+        android:id="@+id/nav_pauta"
+        android:title="@string/menu_pauta" />
 
-        <item
-            android:id="@+id/nav_sessao_votacao"
-            android:title="@string/menu_sessao_votacao" />
-    </group>
+    <item
+        android:id="@+id/nav_sessao_votacao"
+        android:title="@string/menu_sessao_votacao" />
+
 </menu>

@@ -13,12 +13,18 @@
         android:theme="@style/Theme.VotoEletronico">
 
         <activity
-            android:name=".ui.PrincipalActivity"
+            android:name=".uis.LoginActivity"
+            android:label="@string/login_titulo"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.VotoEletronico.NoActionBar"/>
+
+        <activity
+            android:name=".uis.PrincipalActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.VotoEletronico.NoActionBar" />
 
         <activity
-            android:name=".ui.SplashScreenActivity"
+            android:name=".uis.SplashScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.VotoEletronico.NoActionBar">
             <intent-filter>

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="azulLogo">#EAF0FE</color>
-    <color name="colorPrimary">#00ADEE</color>
+    <color name="colorPrimary">#7B8FFF</color>
+
     <color name="white">#FFFFFFFF</color>
     <color name="black">#00000000</color>
+
+    <color name="azulLogo">#EAF0FE</color>
+
+    <color name="overlayBackground">#A9A9A9</color>
 </resources>
