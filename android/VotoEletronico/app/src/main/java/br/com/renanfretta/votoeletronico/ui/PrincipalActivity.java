@@ -1,4 +1,4 @@
-package br.com.renanfretta.votoeletronico;
+package br.com.renanfretta.votoeletronico.ui;
 
 import android.os.Bundle;
 import com.google.android.material.navigation.NavigationView;
@@ -11,7 +11,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+import br.com.renanfretta.votoeletronico.R;
+
+public class PrincipalActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
