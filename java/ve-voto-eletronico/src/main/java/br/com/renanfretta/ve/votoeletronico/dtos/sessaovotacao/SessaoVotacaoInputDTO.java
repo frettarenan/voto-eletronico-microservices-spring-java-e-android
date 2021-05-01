@@ -1,13 +1,9 @@
 package br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao;
 
-import java.io.Serializable;
-
 import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.io.Serializable;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)

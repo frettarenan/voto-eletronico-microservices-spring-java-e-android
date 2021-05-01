@@ -1,9 +1,9 @@
 package br.com.renanfretta.ve.commons.configs;
 
+import ma.glasnost.orika.MapperFacade;
+
 import java.io.Serializable;
 import java.util.List;
-
-import ma.glasnost.orika.MapperFacade;
 
 public abstract class OrikaMapperBase {
 

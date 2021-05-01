@@ -1,49 +1,46 @@
 package br.com.renanfretta.ve.votoeletronico;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.Date;
-import java.util.Optional;
-
+import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoInputDTO;
+import br.com.renanfretta.ve.votoeletronico.entities.Pauta;
+import br.com.renanfretta.ve.votoeletronico.entities.SessaoVotacao;
+import br.com.renanfretta.ve.votoeletronico.repositories.sessaovotacao.SessaoVotacaoRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.time.DateUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Date;
+import java.util.Optional;
 
-import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
-import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoInputDTO;
-import br.com.renanfretta.ve.votoeletronico.entities.Pauta;
-import br.com.renanfretta.ve.votoeletronico.entities.SessaoVotacao;
-import br.com.renanfretta.ve.votoeletronico.repositories.sessaovotacao.SessaoVotacaoRepository;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @DisplayName("Sessão votação endpoint tests")
 public class SessaoVotacaoEndpointTest {
 
-	@Autowired
-	private MockMvc mockMvc;
+	private final MockMvc mockMvc;
+	private final ObjectMapper objectMapper;
 
 	@MockBean
 	private SessaoVotacaoRepository repository;
 
-	@Autowired
-	private ObjectMapper objectMapper;
-
 	private static SessaoVotacao sessaoVotacao01;
+
+	public SessaoVotacaoEndpointTest(MockMvc mockMvc, ObjectMapper objectMapper) {
+		this.mockMvc = mockMvc;
+		this.objectMapper = objectMapper;
+	}
 
 	@BeforeAll
 	private static void beforeAll() {

@@ -1,19 +1,20 @@
 package br.com.renanfretta.ve.votoeletronico.configs.properties;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.renanfretta.ve.votoeletronico.enums.MessagesPropertyEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
-import br.com.renanfretta.ve.votoeletronico.enums.MessagesPropertyEnum;
-
 @Component
 public class MessagesProperty {
 
-	@Autowired
-	private MessageSource messageSource;
-	
+	private final MessageSource messageSource;
+
+	public MessagesProperty(MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
+
 	public String getMessage(MessagesPropertyEnum messagesPropertyEnum) {
 		return messageSource.getMessage(messagesPropertyEnum.getKey(), null, LocaleContextHolder.getLocale());
 	}

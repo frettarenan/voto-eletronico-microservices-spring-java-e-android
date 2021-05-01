@@ -1,17 +1,5 @@
 package br.com.renanfretta.ve.votoeletronico.services;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import br.com.renanfretta.ve.votoeletronico.configs.OrikaMapper;
 import br.com.renanfretta.ve.votoeletronico.configs.properties.MessagesProperty;
 import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaInputDTO;
@@ -19,6 +7,15 @@ import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.entities.Pauta;
 import br.com.renanfretta.ve.votoeletronico.enums.MessagesPropertyEnum;
 import br.com.renanfretta.ve.votoeletronico.repositories.pauta.PautaRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Validated
@@ -26,17 +23,17 @@ public class PautaService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PautaService.class);
 	
-	@Autowired
-	private ObjectMapper objectMapper;
+	private final ObjectMapper objectMapper;
+	private final OrikaMapper orikaMapper;
+	private final MessagesProperty messagesProperty;
+	private final PautaRepository repository;
 
-	@Autowired
-	private OrikaMapper orikaMapper;
-	
-	@Autowired
-	private MessagesProperty messagesProperty;
-
-	@Autowired
-	private PautaRepository repository;
+	public PautaService(ObjectMapper objectMapper, OrikaMapper orikaMapper, MessagesProperty messagesProperty, PautaRepository repository) {
+		this.objectMapper = objectMapper;
+		this.orikaMapper = orikaMapper;
+		this.messagesProperty = messagesProperty;
+		this.repository = repository;
+	}
 
 	public List<PautaOutputDTO> findAll() {
 		List<Pauta> list = repository.findAll();

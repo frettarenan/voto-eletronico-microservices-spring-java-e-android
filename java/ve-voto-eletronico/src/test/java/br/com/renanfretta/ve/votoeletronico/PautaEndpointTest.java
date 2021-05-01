@@ -1,49 +1,44 @@
 package br.com.renanfretta.ve.votoeletronico;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaInputDTO;
+import br.com.renanfretta.ve.votoeletronico.entities.Pauta;
+import br.com.renanfretta.ve.votoeletronico.repositories.pauta.PautaRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaInputDTO;
-import br.com.renanfretta.ve.votoeletronico.entities.Pauta;
-import br.com.renanfretta.ve.votoeletronico.repositories.pauta.PautaRepository;
+import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @DisplayName("Pauta endpoint tests")
 public class PautaEndpointTest {
 
-	@Autowired
-	private MockMvc mockMvc;
-
-	@MockBean
-	private PautaRepository repository;
-
-	@Autowired
-	private ObjectMapper objectMapper;
+	private final MockMvc mockMvc;
+	private final PautaRepository repository;
+	private final ObjectMapper objectMapper;
 
 	private static Pauta pauta01;
+
+	public PautaEndpointTest(MockMvc mockMvc, PautaRepository repository, ObjectMapper objectMapper) {
+		this.mockMvc = mockMvc;
+		this.repository = repository;
+		this.objectMapper = objectMapper;
+	}
 
 	@BeforeAll
 	private static void beforeAll() {

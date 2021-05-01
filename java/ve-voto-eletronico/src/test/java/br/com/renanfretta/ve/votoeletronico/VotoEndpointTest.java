@@ -1,32 +1,5 @@
 package br.com.renanfretta.ve.votoeletronico;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Optional;
-
-import org.apache.commons.lang.time.DateUtils;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import br.com.renanfretta.ve.commons.dtos.usuario.UsuarioDTO;
 import br.com.renanfretta.ve.commons.integracoes.userinfo.users.UserInfoApiUsersFindByCpfOutput;
 import br.com.renanfretta.ve.votoeletronico.configs.properties.YamlConfig;
@@ -40,21 +13,35 @@ import br.com.renanfretta.ve.votoeletronico.repositories.sessaovotacao.SessaoVot
 import br.com.renanfretta.ve.votoeletronico.repositories.usuario.UsuarioRepository;
 import br.com.renanfretta.ve.votoeletronico.repositories.voto.VotoRepository;
 import br.com.renanfretta.ve.votoeletronico.services.VotoService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import org.apache.commons.lang.time.DateUtils;
+import org.junit.jupiter.api.*;
+import org.mockito.BDDMockito;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Optional;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @DisplayName("Voto endpoint tests")
 public class VotoEndpointTest {
 
-	private static MockWebServer mockWebServer = new MockWebServer();
-
-	@Autowired
-	private YamlConfig yamlConfig;
-
-	@Autowired
-	private MockMvc mockMvc;
+	private final YamlConfig yamlConfig;
+	private final MockMvc mockMvc;
+	private final ObjectMapper objectMapper;
 
 	@MockBean
 	private VotoRepository votoRepository;
@@ -65,10 +52,9 @@ public class VotoEndpointTest {
 	@MockBean
 	private UsuarioRepository usuarioRepository;
 
-	@Autowired
-	private ObjectMapper objectMapper;
-
 	private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	private static MockWebServer mockWebServer = new MockWebServer();
 
 	private static Usuario usuario01;
 
@@ -81,6 +67,12 @@ public class VotoEndpointTest {
 	private static Date dataHoraInicioSessaoVotacaoVoto01;
 	private static Date dataHoraFimSessaoVotacaoVoto01;
 	private static Date dataHoraVotacaoVoto01;
+
+	public VotoEndpointTest(YamlConfig yamlConfig, MockMvc mockMvc, ObjectMapper objectMapper) {
+		this.yamlConfig = yamlConfig;
+		this.mockMvc = mockMvc;
+		this.objectMapper = objectMapper;
+	}
 
 	@BeforeAll
 	private static void beforeAll() throws IOException {

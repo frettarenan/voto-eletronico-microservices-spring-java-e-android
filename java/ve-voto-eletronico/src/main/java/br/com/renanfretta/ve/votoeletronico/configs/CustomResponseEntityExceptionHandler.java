@@ -1,13 +1,13 @@
 package br.com.renanfretta.ve.votoeletronico.configs;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
-
+import br.com.renanfretta.ve.votoeletronico.configs.properties.MessagesProperty;
+import br.com.renanfretta.ve.votoeletronico.enums.MessagesPropertyEnum;
+import br.com.renanfretta.ve.votoeletronico.exceptions.ErroTratadoRestException;
+import com.mysql.cj.exceptions.MysqlErrorNumbers;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,19 +17,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.mysql.cj.exceptions.MysqlErrorNumbers;
-
-import br.com.renanfretta.ve.votoeletronico.configs.properties.MessagesProperty;
-import br.com.renanfretta.ve.votoeletronico.enums.MessagesPropertyEnum;
-import br.com.renanfretta.ve.votoeletronico.exceptions.ErroTratadoRestException;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@Autowired
-	private MessagesProperty messagesProperty;
+	private final MessagesProperty messagesProperty;
+
+	public CustomResponseEntityExceptionHandler(MessagesProperty messagesProperty) {
+		this.messagesProperty = messagesProperty;
+	}
 
 	@ExceptionHandler({ ErroTratadoRestException.class })
 	public ResponseEntity<Object> handleMethodArgumentTypeMismatch(ErroTratadoRestException ex, WebRequest request) {

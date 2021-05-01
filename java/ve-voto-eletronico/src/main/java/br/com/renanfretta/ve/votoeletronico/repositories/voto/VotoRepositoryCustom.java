@@ -1,8 +1,8 @@
 package br.com.renanfretta.ve.votoeletronico.repositories.voto;
 
-import java.util.List;
-
 import br.com.renanfretta.ve.votoeletronico.dtos.voto.RelatorioVotosContabilizadosOutputDTO;
+
+import java.util.List;
 
 public interface VotoRepositoryCustom {
 

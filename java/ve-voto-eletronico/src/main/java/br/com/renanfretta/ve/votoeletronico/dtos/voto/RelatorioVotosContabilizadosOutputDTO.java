@@ -1,17 +1,15 @@
 package br.com.renanfretta.ve.votoeletronico.dtos.voto;
 
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-import com.querydsl.core.annotations.QueryProjection;
-
 import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @Getter

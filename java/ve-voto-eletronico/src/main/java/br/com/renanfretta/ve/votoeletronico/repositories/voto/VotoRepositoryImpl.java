@@ -1,28 +1,27 @@
 package br.com.renanfretta.ve.votoeletronico.repositories.voto;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-import com.querydsl.jpa.impl.JPAQuery;
-
 import br.com.renanfretta.ve.votoeletronico.dtos.pauta.QPautaOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.voto.QRelatorioVotosContabilizadosOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.voto.RelatorioVotosContabilizadosOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.entities.QPauta;
 import br.com.renanfretta.ve.votoeletronico.entities.QVoto;
+import com.querydsl.jpa.impl.JPAQuery;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 public class VotoRepositoryImpl implements VotoRepositoryCustom {
 
-	@Autowired
-	private EntityManager em;
+	private final EntityManager em;
 
 	private static final QVoto _voto = QVoto.voto1;
 	private static final QPauta _pauta = QPauta.pauta;
+
+	public VotoRepositoryImpl(EntityManager em) {
+		this.em = em;
+	}
 
 	@Override
 	public List<RelatorioVotosContabilizadosOutputDTO> contabilizaVotos(Long idPauta) {

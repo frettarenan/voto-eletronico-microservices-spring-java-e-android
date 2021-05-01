@@ -1,7 +1,5 @@
 package br.com.renanfretta.ve.votoeletronico.configs;
 
-import org.springframework.stereotype.Component;
-
 import br.com.renanfretta.ve.commons.configs.OrikaMapperBase;
 import br.com.renanfretta.ve.commons.dtos.usuario.UsuarioDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaInputDTO;
@@ -16,6 +14,7 @@ import br.com.renanfretta.ve.votoeletronico.entities.Usuario;
 import br.com.renanfretta.ve.votoeletronico.entities.Voto;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
+import org.springframework.stereotype.Component;
 
 @Component
 public class OrikaMapper extends OrikaMapperBase {

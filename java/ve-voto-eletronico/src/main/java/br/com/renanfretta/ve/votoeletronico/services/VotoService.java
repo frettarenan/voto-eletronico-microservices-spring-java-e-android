@@ -1,21 +1,5 @@
 package br.com.renanfretta.ve.votoeletronico.services;
 
-import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.reactive.function.client.WebClient;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import br.com.renanfretta.ve.commons.dtos.usuario.UsuarioDTO;
 import br.com.renanfretta.ve.commons.integracoes.userinfo.users.UserInfoApiUsersFindByCpfOutput;
 import br.com.renanfretta.ve.votoeletronico.configs.OrikaMapper;
@@ -30,7 +14,20 @@ import br.com.renanfretta.ve.votoeletronico.entities.Voto;
 import br.com.renanfretta.ve.votoeletronico.enums.MessagesPropertyEnum;
 import br.com.renanfretta.ve.votoeletronico.exceptions.ErroTratadoRestException;
 import br.com.renanfretta.ve.votoeletronico.repositories.voto.VotoRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+
+import java.util.Date;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Validated
@@ -41,29 +38,25 @@ public class VotoService {
 	public static final String STATUS_ABLE_TO_VOTE = "ABLE_TO_VOTE";
 	public static final String STATUS_UNABLE_TO_VOTE = "UNABLE_TO_VOTE";
 
-	@Autowired
-	private ObjectMapper objectMapper;
+	private final ObjectMapper objectMapper;
+	private final OrikaMapper orikaMapper;
+	private final MessagesProperty messagesProperty;
+	private final VotoRepository repository;
+	private final YamlConfig yamlConfig;
+	private final SessaoVotacaoService sessaoVotacaoService;
+	private final UsuarioService usuarioService;
+	private final PautaService pautaService;
 
-	@Autowired
-	private OrikaMapper orikaMapper;
-
-	@Autowired
-	private MessagesProperty messagesProperty;
-
-	@Autowired
-	private VotoRepository repository;
-
-	@Autowired
-	private YamlConfig yamlConfig;
-
-	@Autowired
-	private SessaoVotacaoService sessaoVotacaoService;
-
-	@Autowired
-	private UsuarioService usuarioService;
-
-	@Autowired
-	private PautaService pautaService;
+	public VotoService(ObjectMapper objectMapper, OrikaMapper orikaMapper, MessagesProperty messagesProperty, VotoRepository repository, YamlConfig yamlConfig, SessaoVotacaoService sessaoVotacaoService, UsuarioService usuarioService, PautaService pautaService) {
+		this.objectMapper = objectMapper;
+		this.orikaMapper = orikaMapper;
+		this.messagesProperty = messagesProperty;
+		this.repository = repository;
+		this.yamlConfig = yamlConfig;
+		this.sessaoVotacaoService = sessaoVotacaoService;
+		this.usuarioService = usuarioService;
+		this.pautaService = pautaService;
+	}
 
 	public VotoOutputDTO findById(Long id) {
 		Voto voto = repository.findById(id).orElseThrow(() -> new NoSuchElementException(messagesProperty.getMessage(MessagesPropertyEnum.ERRO__REGISTRO_NAO_ENCONTRADO_ENTIDADE_VOTO)));
