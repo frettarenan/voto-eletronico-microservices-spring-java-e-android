@@ -1,6 +1,7 @@
 package br.com.renanfretta.ve.votoeletronico.resources;
 
-import br.com.renanfretta.ve.votoeletronico.dtos.voto.RelatorioVotosContabilizadosOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.voto.RelatorioVotosContabilizadosPorPautaOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.voto.RelatorioVotosContabilizadosPorSessaoVotacaoOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.voto.VotoInputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.voto.VotoOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.exceptions.ErroTratadoRestException;
@@ -49,17 +50,33 @@ public class VotoResource {
 		return ResponseEntity.status(HttpStatus.CREATED).body(votoOutputDTO);
 	}
 
-	@Operation(summary = "listaVotosContabilizados", description = "Consulta total de votos pelo ID da pauta informada")
+	@Operation(summary = "listaVotosContabilizadosPorPauta", description = "Consulta total de votos pelo ID da pauta informada")
 	@ApiResponses(value = { //
-			@ApiResponse(responseCode = "200", description = "Sucesso", content = @Content(schema = @Schema(implementation = RelatorioVotosContabilizadosOutputDTO.class))), //
+			@ApiResponse(responseCode = "200", description = "Sucesso", content = @Content(schema = @Schema(implementation = RelatorioVotosContabilizadosPorPautaOutputDTO.class))), //
 			@ApiResponse(responseCode = "401", description = "Não autorizado"), //
 			@ApiResponse(responseCode = "403", description = "Não possui permissão para acessar o recurso"), //
 			@ApiResponse(responseCode = "404", description = "Não encontrado") //
 	})
 	@GetMapping(value = "/contabilizados/pauta/{idPauta}")
-	public ResponseEntity<List<RelatorioVotosContabilizadosOutputDTO>> listaVotosContabilizados(@PathVariable Long idPauta) {
-		LOGGER.trace("VotoResource/contabilizaVotos(" + idPauta + ") foi chamado");
-		List<RelatorioVotosContabilizadosOutputDTO> list = service.contabilizaVotos(idPauta);
+	public ResponseEntity<List<RelatorioVotosContabilizadosPorPautaOutputDTO>> listaVotosContabilizadosPorPauta(@PathVariable Long idPauta) {
+		LOGGER.trace("VotoResource/listaVotosContabilizadosPorPauta(" + idPauta + ") foi chamado");
+		List<RelatorioVotosContabilizadosPorPautaOutputDTO> list = service.contabilizaVotosPorPauta(idPauta);
+		// FIXME: Implementar: Pauta sem sessao de votacao
+		// FIXME: Implementar: sem resultados
+		return ResponseEntity.ok(list);
+	}
+
+	@Operation(summary = "listaVotosContabilizadosPorSessaoVotacao", description = "Consulta total de votos pelo ID da sessão de votação informada")
+	@ApiResponses(value = { //
+			@ApiResponse(responseCode = "200", description = "Sucesso", content = @Content(schema = @Schema(implementation = RelatorioVotosContabilizadosPorPautaOutputDTO.class))), //
+			@ApiResponse(responseCode = "401", description = "Não autorizado"), //
+			@ApiResponse(responseCode = "403", description = "Não possui permissão para acessar o recurso"), //
+			@ApiResponse(responseCode = "404", description = "Não encontrado") //
+	})
+	@GetMapping(value = "/contabilizados/sessao-votacao/{idSessaoVotacao}")
+	public ResponseEntity<List<RelatorioVotosContabilizadosPorSessaoVotacaoOutputDTO>> listaVotosContabilizadosPorSessaoVotacao(@PathVariable Long idSessaoVotacao) {
+		LOGGER.trace("VotoResource/listaVotosContabilizadosPorSessaoVotacao(" + idSessaoVotacao + ") foi chamado");
+		List<RelatorioVotosContabilizadosPorSessaoVotacaoOutputDTO> list = service.contabilizaVotosPorSessaoVotacao(idSessaoVotacao);
 		// FIXME: Implementar: Pauta sem sessao de votacao
 		// FIXME: Implementar: sem resultados
 		return ResponseEntity.ok(list);

@@ -1,11 +1,14 @@
 package br.com.renanfretta.ve.votoeletronico.repositories.voto;
 
-import br.com.renanfretta.ve.votoeletronico.dtos.voto.RelatorioVotosContabilizadosOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.voto.RelatorioVotosContabilizadosPorPautaOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.voto.RelatorioVotosContabilizadosPorSessaoVotacaoOutputDTO;
 
 import java.util.List;
 
 public interface VotoRepositoryCustom {
 
-	List<RelatorioVotosContabilizadosOutputDTO> contabilizaVotos(Long idPauta);
+	List<RelatorioVotosContabilizadosPorPautaOutputDTO> contabilizaVotosPorPauta(Long idPauta);
+
+	List<RelatorioVotosContabilizadosPorSessaoVotacaoOutputDTO> contabilizaVotosPorSessaoVotacao(Long idSessaoVotacao);
 
 }

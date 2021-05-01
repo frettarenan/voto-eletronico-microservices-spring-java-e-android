@@ -1,6 +1,6 @@
 package br.com.renanfretta.ve.votoeletronico.dtos.voto;
 
-import br.com.renanfretta.ve.votoeletronico.dtos.pauta.PautaOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoOutputDTO;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,22 +16,22 @@ import java.io.Serializable;
 @Setter
 @Builder
 @Entity
-public class RelatorioVotosContabilizadosOutputDTO implements Serializable {
+public class RelatorioVotosContabilizadosPorSessaoVotacaoOutputDTO implements Serializable {
 
-	private static final long serialVersionUID = -2502532290072614514L;
+	private static final long serialVersionUID = -3162602567651794704L;
 
 	@Id
 	private Boolean voto;
-	
+
 	private Long totalVotos;
-	
-	private PautaOutputDTO pauta;
+
+	private SessaoVotacaoOutputDTO sessaoVotacao;
 
 	@QueryProjection
-	public RelatorioVotosContabilizadosOutputDTO(Boolean voto, Long totalVotos, PautaOutputDTO pauta) {
+	public RelatorioVotosContabilizadosPorSessaoVotacaoOutputDTO(Boolean voto, Long totalVotos, SessaoVotacaoOutputDTO sessaoVotacao) {
 		this.voto = voto;
 		this.totalVotos = totalVotos;
-		this.pauta = pauta;
+		this.sessaoVotacao = sessaoVotacao;
 	}
 
 }

@@ -6,7 +6,8 @@ import br.com.renanfretta.ve.votoeletronico.configs.OrikaMapper;
 import br.com.renanfretta.ve.votoeletronico.configs.properties.MessagesProperty;
 import br.com.renanfretta.ve.votoeletronico.configs.properties.YamlConfig;
 import br.com.renanfretta.ve.votoeletronico.dtos.sessaovotacao.SessaoVotacaoOutputDTO;
-import br.com.renanfretta.ve.votoeletronico.dtos.voto.RelatorioVotosContabilizadosOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.voto.RelatorioVotosContabilizadosPorPautaOutputDTO;
+import br.com.renanfretta.ve.votoeletronico.dtos.voto.RelatorioVotosContabilizadosPorSessaoVotacaoOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.voto.VotoInputDTO;
 import br.com.renanfretta.ve.votoeletronico.dtos.voto.VotoOutputDTO;
 import br.com.renanfretta.ve.votoeletronico.entities.Pauta;
@@ -112,12 +113,21 @@ public class VotoService {
 		}
 	}
 
-	public List<RelatorioVotosContabilizadosOutputDTO> contabilizaVotos(Long idPauta) {
+	public List<RelatorioVotosContabilizadosPorPautaOutputDTO> contabilizaVotosPorPauta(Long idPauta) {
 
 		// Valida se a pauta existe
 		pautaService.findById(idPauta);
 
-		List<RelatorioVotosContabilizadosOutputDTO> list = repository.contabilizaVotos(idPauta);
+		List<RelatorioVotosContabilizadosPorPautaOutputDTO> list = repository.contabilizaVotosPorPauta(idPauta);
+		return list;
+	}
+
+	public List<RelatorioVotosContabilizadosPorSessaoVotacaoOutputDTO> contabilizaVotosPorSessaoVotacao(Long idSessaoVotacao) {
+
+		// Valida se a sessão de votação existe
+		sessaoVotacaoService.findById(idSessaoVotacao);
+
+		List<RelatorioVotosContabilizadosPorSessaoVotacaoOutputDTO> list = repository.contabilizaVotosPorSessaoVotacao(idSessaoVotacao);
 		return list;
 	}
 

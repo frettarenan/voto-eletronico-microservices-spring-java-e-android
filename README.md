@@ -26,6 +26,10 @@ Objetivos:
   * http://localhost:8080/swagger-ui/index.html
   * http://localhost:8080/v2/api-docs
 
+## Acesso RabbitMQ Management 
+  
+  * http://localhost:15672 Usuário: guest Senha: guest
+
 ## Demonstração da app mobile
 
 * https://youtu.be/LGQcJlMydFI
