@@ -49,14 +49,18 @@ services:
       - mysql-voto-eletronico-hml
       - rabbitmq-voto-eletronico-hml
       - ve-api-gateway-hml
-    ports:
-    - 8081:8080
+#    ports:
+#    - 8081:8080
     environment:
       - JAVA_OPTS=
         -DEUREKA_SERVER=http://ve-eureka-server-hml:8761/eureka
         -DJDBC_DATABASE_URL=jdbc:mysql://mysql-voto-eletronico-hml:3306/rf-voto-eletronico?createDatabaseIfNotExist=true&useSSL=false
         -DJDBC_DATABASE_USERNAME=renanfretta
         -DJDBC_DATABASE_PASSWORD=Ren@nFretta1986
+        -DRABBITMQ_HOST=rabbitmq-voto-eletronico-hml
+        -DRABBITMQ_PORT=5672
+        -DRABBITMQ_USERNAME=guest
+        -DRABBITMQ_PASSWORD=guest
     networks:
       - rf-ve-voto-eletronico-hml-network
   ve-voto-eletronico-hml-02:
@@ -66,14 +70,18 @@ services:
       - mysql-voto-eletronico-hml
       - rabbitmq-voto-eletronico-hml
       - ve-api-gateway-hml      
-    ports:
-    - 8082:8080
+#    ports:
+#    - 8082:8080
     environment:
       - JAVA_OPTS=
         -DEUREKA_SERVER=http://ve-eureka-server-hml:8761/eureka
         -DJDBC_DATABASE_URL=jdbc:mysql://mysql-voto-eletronico-hml:3306/rf-voto-eletronico?createDatabaseIfNotExist=true&useSSL=false
         -DJDBC_DATABASE_USERNAME=renanfretta
         -DJDBC_DATABASE_PASSWORD=Ren@nFretta1986
+        -DRABBITMQ_HOST=rabbitmq-voto-eletronico-hml
+        -DRABBITMQ_PORT=5672
+        -DRABBITMQ_USERNAME=guest
+        -DRABBITMQ_PASSWORD=guest
     networks:
       - rf-ve-voto-eletronico-hml-network
 networks:

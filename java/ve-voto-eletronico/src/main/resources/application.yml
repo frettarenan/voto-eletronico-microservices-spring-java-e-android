@@ -22,6 +22,12 @@ spring:
     url: ${JDBC_DATABASE_URL:jdbc:mysql://localhost:3306/rf-voto-eletronico?createDatabaseIfNotExist=true&useSSL=false}
     username: ${JDBC_DATABASE_USERNAME:renanfretta}
     password: ${JDBC_DATABASE_PASSWORD:Ren@nFretta1986}
+  rabbitmq:
+    virtualhost: ${RABBITMQ_VIRTUAL_HOST:/}
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
   jackson:
     time-zone: America/Sao_Paulo
     locale: pt_BR
