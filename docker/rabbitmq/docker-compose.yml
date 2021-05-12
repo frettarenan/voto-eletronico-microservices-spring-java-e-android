@@ -1,9 +1,0 @@
-version: "3.3"
-services:
-  rf-rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: rf-rabbitmq
-    ports:
-        - 5672:5672
-        - 15672:15672
-    # User: guest Password: guest

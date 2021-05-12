@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -29,14 +30,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Sessão votação endpoint tests")
 public class SessaoVotacaoEndpointTest {
 
-	private final MockMvc mockMvc;
-	private final ObjectMapper objectMapper;
+	private MockMvc mockMvc;
+	private ObjectMapper objectMapper;
 
 	@MockBean
 	private SessaoVotacaoRepository repository;
 
 	private static SessaoVotacao sessaoVotacao01;
 
+	@Autowired
 	public SessaoVotacaoEndpointTest(MockMvc mockMvc, ObjectMapper objectMapper) {
 		this.mockMvc = mockMvc;
 		this.objectMapper = objectMapper;

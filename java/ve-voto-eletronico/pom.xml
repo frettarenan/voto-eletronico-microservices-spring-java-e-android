@@ -7,22 +7,41 @@
 	<packaging>jar</packaging>
 
 	<parent>
-		<groupId>com.br.renanfretta</groupId>
-		<artifactId>voto-eletronico-microservices-spring-java-e-android</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.4.5</version>
+		<relativePath />
 	</parent>
 
 	<groupId>br.com.renanfretta.voto-eletronico-microservices-spring-java-e-android</groupId>
 	<artifactId>ve-voto-eletronico</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
 
 	<properties>
+		<ve-commons.version>1.0.0-SNAPSHOT</ve-commons.version>
+		<io.springfox.version>3.0.0</io.springfox.version>
 		<com.mysema.maven.apt-maven-plugin.version>1.1.3</com.mysema.maven.apt-maven-plugin.version>
+		<ma.glasnost.orika.orika-core.version>1.5.4</ma.glasnost.orika.orika-core.version>
+		<spring-cloud.version>2020.0.2</spring-cloud.version>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
 			<groupId>br.com.renanfretta.voto-eletronico-microservices-spring-java-e-android</groupId>
 			<artifactId>ve-commons</artifactId>
+			<version>${ve-commons.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -57,6 +76,7 @@
 		<dependency>
 			<groupId>ma.glasnost.orika</groupId>
 			<artifactId>orika-core</artifactId>
+			<version>${ma.glasnost.orika.orika-core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -87,6 +107,7 @@
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-boot-starter</artifactId>
+			<version>${io.springfox.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

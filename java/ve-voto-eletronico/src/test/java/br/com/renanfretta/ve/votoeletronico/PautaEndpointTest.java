@@ -9,8 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -28,163 +30,165 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Pauta endpoint tests")
 public class PautaEndpointTest {
 
-	private final MockMvc mockMvc;
-	private final PautaRepository repository;
-	private final ObjectMapper objectMapper;
+    private MockMvc mockMvc;
+    private ObjectMapper objectMapper;
 
-	private static Pauta pauta01;
+    @MockBean
+    private PautaRepository repository;
 
-	public PautaEndpointTest(MockMvc mockMvc, PautaRepository repository, ObjectMapper objectMapper) {
-		this.mockMvc = mockMvc;
-		this.repository = repository;
-		this.objectMapper = objectMapper;
-	}
+    private static Pauta pauta01;
 
-	@BeforeAll
-	private static void beforeAll() {
-		pauta01 = Pauta.builder() //
-				.id(1L) //
-				.descricao("Aprova o novo orçamento para a saúde?") //
-				.build();
-	}
+    @Autowired
+    public PautaEndpointTest(MockMvc mockMvc, ObjectMapper objectMapper) {
+        this.mockMvc = mockMvc;
+        this.objectMapper = objectMapper;
+    }
 
-	@Nested
-	@DisplayName("Method: GET Path: /pauta")
-	class findAll {
+    @BeforeAll
+    private static void beforeAll() {
+        pauta01 = Pauta.builder() //
+                .id(1L) //
+                .descricao("Aprova o novo orçamento para a saúde?") //
+                .build();
+    }
 
-		@Test
-		@DisplayName("Retornando elementos corretamente")
-		public void findAllComResultados() throws Exception {
+    @Nested
+    @DisplayName("Method: GET Path: /pauta")
+    class findAll {
 
-			List<Pauta> list = new ArrayList<Pauta>();
-			list.add(pauta01);
+        @Test
+        @DisplayName("Retornando elementos corretamente")
+        public void findAllComResultados() throws Exception {
 
-			BDDMockito.when(repository.findAll()).thenReturn(list);
+            List<Pauta> list = new ArrayList<Pauta>();
+            list.add(pauta01);
 
-			mockMvc.perform(get("/pauta")) //
-					.andExpect(status().isOk()) //
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
-					.andExpect(jsonPath("$.length()", is(1))) //
-					.andExpect(jsonPath("$.[0].id").value(1)) //
-					.andExpect(jsonPath("$.[0].descricao").value("Aprova o novo orçamento para a saúde?"));
-		}
+            BDDMockito.when(repository.findAll()).thenReturn(list);
 
-		@Test
-		@DisplayName("Sem resultados")
-		public void findAllSemResultado() throws Exception {
+            mockMvc.perform(get("/pauta")) //
+                    .andExpect(status().isOk()) //
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
+                    .andExpect(jsonPath("$.length()", is(1))) //
+                    .andExpect(jsonPath("$.[0].id").value(1)) //
+                    .andExpect(jsonPath("$.[0].descricao").value("Aprova o novo orçamento para a saúde?"));
+        }
 
-			List<Pauta> list = new ArrayList<Pauta>();
+        @Test
+        @DisplayName("Sem resultados")
+        public void findAllSemResultado() throws Exception {
 
-			BDDMockito.when(repository.findAll()).thenReturn(list);
+            List<Pauta> list = new ArrayList<Pauta>();
 
-			mockMvc.perform(get("/pauta")) //
-					.andExpect(status().isNoContent());
-		}
+            BDDMockito.when(repository.findAll()).thenReturn(list);
 
-	}
+            mockMvc.perform(get("/pauta")) //
+                    .andExpect(status().isNoContent());
+        }
 
-	@Nested
-	@DisplayName("Method: GET Path: /pauta/{id}")
-	class findById {
+    }
 
-		@Test
-		@DisplayName("Retornando elementos corretamente")
-		public void findByIdEncontrado() throws Exception {
+    @Nested
+    @DisplayName("Method: GET Path: /pauta/{id}")
+    class findById {
 
-			BDDMockito.when(repository.findById(1L)).thenReturn(Optional.of(pauta01));
+        @Test
+        @DisplayName("Retornando elementos corretamente")
+        public void findByIdEncontrado() throws Exception {
 
-			mockMvc.perform(get("/pauta/1")) //
-					.andExpect(status().isOk()) //
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
-					.andExpect(jsonPath("$.id").value(1)) //
-					.andExpect(jsonPath("$.descricao").value("Aprova o novo orçamento para a saúde?")); //
-		}
+            BDDMockito.when(repository.findById(1L)).thenReturn(Optional.of(pauta01));
 
-		@Test
-		@DisplayName("Sem resultados")
-		public void findByIdNaoEncontrado() throws Exception {
+            mockMvc.perform(get("/pauta/1")) //
+                    .andExpect(status().isOk()) //
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
+                    .andExpect(jsonPath("$.id").value(1)) //
+                    .andExpect(jsonPath("$.descricao").value("Aprova o novo orçamento para a saúde?")); //
+        }
 
-			BDDMockito.when(repository.findById(9999L)).thenReturn(null);
+        @Test
+        @DisplayName("Sem resultados")
+        public void findByIdNaoEncontrado() throws Exception {
 
-			mockMvc.perform(get("/pauta/1")) //
-					.andExpect(status().isNotFound());
-		}
+            BDDMockito.when(repository.findById(9999L)).thenReturn(null);
 
-		@Test
-		@DisplayName("Erro: ID inválido")
-		public void findByIdErro() throws Exception {
+            mockMvc.perform(get("/pauta/1")) //
+                    .andExpect(status().isNotFound());
+        }
 
-			mockMvc.perform(get("/pauta/AAAAA")) //
-					.andExpect(status().isBadRequest());
-		}
+        @Test
+        @DisplayName("Erro: ID inválido")
+        public void findByIdErro() throws Exception {
 
-	}
+            mockMvc.perform(get("/pauta/AAAAA")) //
+                    .andExpect(status().isBadRequest());
+        }
 
-	@Nested
-	@DisplayName("Method: POST Path: /pauta")
-	class salvar {
+    }
 
-		@Test
-		@DisplayName("Salvo com sucesso")
-		public void salvarSucesso() throws Exception {
-			
-			Pauta pauta = Pauta.builder() //
-					.descricao("Aprova o novo orçamento para a saúde?") //
-					.build();
+    @Nested
+    @DisplayName("Method: POST Path: /pauta")
+    class salvar {
 
-			PautaInputDTO pautaInputDTO = PautaInputDTO.builder() //
-					.descricao("Aprova o novo orçamento para a saúde?") //
-					.build();
+        @Test
+        @DisplayName("Salvo com sucesso")
+        public void salvarSucesso() throws Exception {
 
-			BDDMockito.when(repository.save(pauta)).thenReturn(pauta01);
-			BDDMockito.when(repository.findById(1L)).thenReturn(Optional.of(pauta01));
+            Pauta pauta = Pauta.builder() //
+                    .descricao("Aprova o novo orçamento para a saúde?") //
+                    .build();
 
-			mockMvc.perform(post("/pauta") //
-					.contentType(MediaType.APPLICATION_JSON) //
-					.content(objectMapper.writeValueAsString(pautaInputDTO))) //
-					.andExpect(status().isCreated()) //
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
-					.andExpect(jsonPath("$.id").value(1)) //
-					.andExpect(jsonPath("$.descricao").value("Aprova o novo orçamento para a saúde?")); //
-		}
+            PautaInputDTO pautaInputDTO = PautaInputDTO.builder() //
+                    .descricao("Aprova o novo orçamento para a saúde?") //
+                    .build();
 
-	}
+            BDDMockito.when(repository.save(pauta)).thenReturn(pauta01);
+            BDDMockito.when(repository.findById(1L)).thenReturn(Optional.of(pauta01));
 
-	@Nested
-	@DisplayName("Method: DELETE Path: /pauta")
-	class deleteById {
+            mockMvc.perform(post("/pauta") //
+                    .contentType(MediaType.APPLICATION_JSON) //
+                    .content(objectMapper.writeValueAsString(pautaInputDTO))) //
+                    .andExpect(status().isCreated()) //
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
+                    .andExpect(jsonPath("$.id").value(1)) //
+                    .andExpect(jsonPath("$.descricao").value("Aprova o novo orçamento para a saúde?")); //
+        }
 
-		@Test
-		@DisplayName("Deletado com sucesso")
-		public void deleteByIdSucesso() throws Exception {
+    }
 
-			BDDMockito.when(repository.findById(1L)).thenReturn(Optional.of(pauta01));
+    @Nested
+    @DisplayName("Method: DELETE Path: /pauta")
+    class deleteById {
 
-			mockMvc.perform(get("/pauta/1")) //
-					.andExpect(status().isOk()) //
-					.andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
-					.andExpect(jsonPath("$.id").value(1)) //
-					.andExpect(jsonPath("$.descricao").value("Aprova o novo orçamento para a saúde?")); //
-		}
+        @Test
+        @DisplayName("Deletado com sucesso")
+        public void deleteByIdSucesso() throws Exception {
 
-		@Test
-		@DisplayName("Sem resultados")
-		public void deleteByIdNaoEncontrado() throws Exception {
+            BDDMockito.when(repository.findById(1L)).thenReturn(Optional.of(pauta01));
 
-			BDDMockito.when(repository.findById(9999L)).thenReturn(null);
+            mockMvc.perform(get("/pauta/1")) //
+                    .andExpect(status().isOk()) //
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON)) //
+                    .andExpect(jsonPath("$.id").value(1)) //
+                    .andExpect(jsonPath("$.descricao").value("Aprova o novo orçamento para a saúde?")); //
+        }
 
-			mockMvc.perform(get("/pauta/1")) //
-					.andExpect(status().isNotFound());
-		}
+        @Test
+        @DisplayName("Sem resultados")
+        public void deleteByIdNaoEncontrado() throws Exception {
 
-		@Test
-		@DisplayName("Erro: ID inválido")
-		public void deleteByIdErro() throws Exception {
+            BDDMockito.when(repository.findById(9999L)).thenReturn(null);
 
-			mockMvc.perform(get("/pauta/AAAAA")) //
-					.andExpect(status().isBadRequest());
-		}
+            mockMvc.perform(get("/pauta/1")) //
+                    .andExpect(status().isNotFound());
+        }
 
-	}
+        @Test
+        @DisplayName("Erro: ID inválido")
+        public void deleteByIdErro() throws Exception {
+
+            mockMvc.perform(get("/pauta/AAAAA")) //
+                    .andExpect(status().isBadRequest());
+        }
+
+    }
 
 }

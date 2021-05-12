@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    ports:
+      - "9000:9000"
+    # User: admin Password: password
+    command: --admin-password "$$2y$$05$$arC5e4UbRPxfR68jaFnAAe1aL7C1U03pqfyQh49/9lB9lqFxLfBqS"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  mysql-voto-eletronico-dev:
+    image: mysql:5.7
+    container_name: mysql-voto-eletronico-dev
+    command: mysqld --sql_mode=""
+    environment:
+      MYSQL_DATABASE: rf-voto-eletronico
+      MYSQL_USER: renanfretta
+      MYSQL_PASSWORD: 'Ren@nFretta1986'
+      MYSQL_ROOT_PASSWORD: 'Ren@nFretta1986'
+      TZ: 'America/Sao_Paulo'
+    ports:
+    - 3306:3306
+  rabbitmq-voto-eletronico-dev:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq-voto-eletronico-dev
+    ports:
+        - 5672:5672
+        - 15672:15672
+    # User: guest Password: guest

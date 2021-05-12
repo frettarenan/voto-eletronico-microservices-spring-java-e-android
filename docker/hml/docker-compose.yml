@@ -1,0 +1,80 @@
+version: "3.3"
+services:
+  mysql-voto-eletronico-hml:
+    image: mysql:5.7
+    container_name: mysql-voto-eletronico-hml
+    command: mysqld --sql_mode=""
+    environment:
+      MYSQL_DATABASE: rf-voto-eletronico
+      MYSQL_USER: renanfretta
+      MYSQL_PASSWORD: 'Ren@nFretta1986'
+      MYSQL_ROOT_PASSWORD: 'Ren@nFretta1986'
+      TZ: 'America/Sao_Paulo'
+#    ports:
+#    - 3306:3306
+    networks:
+      - rf-ve-voto-eletronico-hml-network
+  rabbitmq-voto-eletronico-hml:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq-voto-eletronico-hml
+#    ports:
+#        - 5672:5672
+#        - 15672:15672
+    networks:
+      - rf-ve-voto-eletronico-hml-network
+    # User: guest Password: guest
+  ve-eureka-server-hml:
+    image: frettarenan/ve-eureka-server
+    container_name: ve-eureka-server-hml
+    ports:
+        - 8761:8761
+    networks:
+      - rf-ve-voto-eletronico-hml-network
+  ve-api-gateway-hml:
+    image: frettarenan/ve-api-gateway
+    container_name: ve-api-gateway-hml
+    depends_on:
+      - ve-eureka-server-hml
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://ve-eureka-server-hml:8761/eureka
+    ports:
+        - 8080:8080
+    networks:
+      - rf-ve-voto-eletronico-hml-network
+  ve-voto-eletronico-hml-01:
+    image: frettarenan/ve-voto-eletronico
+    container_name: ve-voto-eletronico-hml-01
+    depends_on:
+      - mysql-voto-eletronico-hml
+      - rabbitmq-voto-eletronico-hml
+      - ve-api-gateway-hml
+    ports:
+    - 8081:8080
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://ve-eureka-server-hml:8761/eureka
+        -DJDBC_DATABASE_URL=jdbc:mysql://mysql-voto-eletronico-hml:3306/rf-voto-eletronico?createDatabaseIfNotExist=true&useSSL=false
+        -DJDBC_DATABASE_USERNAME=renanfretta
+        -DJDBC_DATABASE_PASSWORD=Ren@nFretta1986
+    networks:
+      - rf-ve-voto-eletronico-hml-network
+  ve-voto-eletronico-hml-02:
+    image: frettarenan/ve-voto-eletronico
+    container_name: ve-voto-eletronico-hml-02
+    depends_on:
+      - mysql-voto-eletronico-hml
+      - rabbitmq-voto-eletronico-hml
+      - ve-api-gateway-hml      
+    ports:
+    - 8082:8080
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://ve-eureka-server-hml:8761/eureka
+        -DJDBC_DATABASE_URL=jdbc:mysql://mysql-voto-eletronico-hml:3306/rf-voto-eletronico?createDatabaseIfNotExist=true&useSSL=false
+        -DJDBC_DATABASE_USERNAME=renanfretta
+        -DJDBC_DATABASE_PASSWORD=Ren@nFretta1986
+    networks:
+      - rf-ve-voto-eletronico-hml-network
+networks:
+  rf-ve-voto-eletronico-hml-network:

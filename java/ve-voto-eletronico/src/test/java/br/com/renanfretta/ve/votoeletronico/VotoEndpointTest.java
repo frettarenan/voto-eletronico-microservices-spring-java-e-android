@@ -19,6 +19,7 @@ import okhttp3.mockwebserver.MockWebServer;
 import org.apache.commons.lang.time.DateUtils;
 import org.junit.jupiter.api.*;
 import org.mockito.BDDMockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -39,9 +40,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Voto endpoint tests")
 public class VotoEndpointTest {
 
-	private final YamlConfig yamlConfig;
-	private final MockMvc mockMvc;
-	private final ObjectMapper objectMapper;
+	private MockMvc mockMvc;
+	private ObjectMapper objectMapper;
+	private YamlConfig yamlConfig;
 
 	@MockBean
 	private VotoRepository votoRepository;
@@ -68,10 +69,11 @@ public class VotoEndpointTest {
 	private static Date dataHoraFimSessaoVotacaoVoto01;
 	private static Date dataHoraVotacaoVoto01;
 
-	public VotoEndpointTest(YamlConfig yamlConfig, MockMvc mockMvc, ObjectMapper objectMapper) {
-		this.yamlConfig = yamlConfig;
+	@Autowired
+	public VotoEndpointTest(MockMvc mockMvc, ObjectMapper objectMapper, YamlConfig yamlConfig) {
 		this.mockMvc = mockMvc;
 		this.objectMapper = objectMapper;
+		this.yamlConfig = yamlConfig;
 	}
 
 	@BeforeAll
